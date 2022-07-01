@@ -50,7 +50,7 @@ function SamplePrevArrow(props) {
 
 export default function Showcase() {
   const settings = {
-    dots: false ,
+    dots: true,
     infinite: true,
     speed: 400,
     slidesToShow: 1,
