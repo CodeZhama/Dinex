@@ -1,0 +1,102 @@
+.icon {
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  background-color: var(--dark);
+  cursor: pointer;
+  transition: 0.1s linear;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+.icon-very-sm {
+  width: 9px;
+}
+.icon-sm {
+  width: 14px;
+}
+.icon-middle {
+  width: 17.75px;
+}
+
+
+.icon-twitter {
+  mask-image: url("../icon/twitter.svg");
+  -webkit-mask-image: url("../icon/twitter.svg");
+}
+
+.icon-telegram {
+  mask-image: url("../icon/telegram.svg");
+  -webkit-mask-image: url("../icon/telegram.svg");
+}
+.icon-facebook {
+  mask-image: url("../icon/facebook.svg");
+  -webkit-mask-image: url("../icon/facebook.svg");
+}
+
+.icon-instagram {
+  mask-image: url("../icon/instagram.svg");
+  -webkit-mask-image: url("../icon/instagram.svg");
+}
+.icon-message {
+  mask-image: url("../icon/message.svg");
+  -webkit-mask-image: url("../icon/message.svg");
+}
+.icon-phone {
+  mask-image: url("../icon/phone.svg");
+  -webkit-mask-image: url("../icon/phone.svg");
+}
+.icon-location {
+  mask-image: url("../icon/location.svg");
+  -webkit-mask-image: url("../icon/location.svg");
+}
+
+.icon-top-right {
+  mask-image: url("../icon/Rectanglesvg.svg");
+  -webkit-mask-image: url("../icon/Rectanglesvg.svg");
+}
+
+.icon-arrow-right {
+  mask-image: url("../icon/iconArrawRight.svg");
+  -webkit-mask-image: url("../icon/iconArrawRight.svg");
+}
+.icon-search {
+  mask-image: url("../icon/searchicon.svg");
+  -webkit-mask-image: url("../icon/searchicon.svg");
+}
+.icon-menu-bar {
+  mask-image: url("../icon/menubar.svg");
+  -webkit-mask-image: url("../icon/menubar.svg");
+}
+
+.icon-briefcase {
+  mask-image: url("../icon/briefcase.svg");
+  -webkit-mask-image: url("../icon/briefcase.svg");
+}
+
+.icon-time-line {
+  mask-image: url("../icon/time-line.svg");
+  -webkit-mask-image: url("../icon/time-line.svg");
+}
+
+.icon-briefcase {
+  mask-image: url("../icon/calendar.svg");
+  -webkit-mask-image: url("../icon/calendar.svg");
+}
+.icon-check-line {
+  mask-image: url("../icon/check-line.svg");
+  -webkit-mask-image: url("../icon/check-line.svg");
+}
+
+.icon-close {
+  mask-image: url("../icon/close.svg");
+  -webkit-mask-image: url("../icon/close.svg");
+}
+
+.icon-down {
+  mask-image: url("../icon/icondown.svg");
+  -webkit-mask-image: url("../icon/icondown.svg");
+}
