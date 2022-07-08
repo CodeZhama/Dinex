@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-
+import { useTranslation } from "react-i18next";
 //
 import BackRouter from "../../../../../components/backRouter";
 import bg from "../../../../../assets/image/showcase.png";
@@ -8,33 +8,30 @@ import ShowcaseTitle from "../../../../../components/showcaseTitle/ShowcaseTitle
 import Button from "../../../../../components/button/Button";
 //
 export default function Avatar() {
+  const { t } = useTranslation();
   return (
     <StyleAvatar>
       <div className="container">
         <div className="avatar">
-          <BackRouter>Xizmatlar</BackRouter>
+          <BackRouter>{t("navbar_service")}</BackRouter>
 
           <div className="projects">
             <ShowcaseTitle servesPage>
-              <h4>Munosibini tanlang!</h4>
-              <h1 className="purposi">Eng sifatli xizmatlar</h1>
-              <p className="comment">
-                Uyingiz uchun munosib arxitektura, landshaft, eksteryer va
-                interyer xizmatlarini siz aziz mijozlarimiz uchun taklif qilmiz,
-                hamda samarali hamkorlikka chorlaymiz
-              </p>
+              <h4>{t("showcase__title")}</h4>
+              <h1 className="purposi">{t("showcase_quality")}</h1>
+              <p className="comment">{t("showcase__description")}</p>
             </ShowcaseTitle>
 
             <div className="plus__project">
               <h1 className="count">+25</h1>
-              <h2 className="count__text">Muvaffaqiyatli loyihalar</h2>
+              <h2 className="count__text">{t("successful_projects")}</h2>
             </div>
           </div>
 
           <div className="btns">
-            <Button>Ariza qoldirish</Button>
+            <Button>{t("leave_an_app_btn")}</Button>
             <Button outline>
-              <p>Bizning loyihalar</p>
+              <p>{t("our_project_btn")}</p>
               <i className="icon icon-top-right icon-very-sm" />
             </Button>
           </div>
@@ -46,7 +43,6 @@ export default function Avatar() {
 
 const StyleAvatar = styled.div`
   background-image: url(${bg});
-  min-height: 100vh;
   padding: 110px 0 78px 0;
   background-repeat: no-repeat;
   background-size: cover;

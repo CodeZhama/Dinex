@@ -1,66 +1,102 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
+import RootContext from "../../../../../context/Context";
 //
 import Title from "../../../../../components/title/Title";
-import list from "./static";
 import Button from "../../../../../components/button";
-//
-export default function Designers() {
-  const [activeIndex, setActiveIndex] = useState(0);
+// import Modal from "../../../../../components/modal/Modal";
 
-  function changeTypeDesign(idx) {
+//
+export default function Designers({
+  setModal,
+  loading,
+  curPortfoliSilder,
+  activeIndex,
+  currentSer,
+  services,
+  setActiveIndex,
+  setCurSer,
+  setCurPortfolioSlider,
+}) {
+  const { t } = useTranslation();
+  const { curtLangId } = useContext(RootContext);
+
+  function changeCurSer(service, idx) {
+    setCurSer(service);
     setActiveIndex(idx);
   }
+
+  function handleSliderArray(array) {
+    setCurPortfolioSlider(array);
+    setModal(true);
+  }
+  useEffect(() => {
+    console.log(curPortfoliSilder);
+  }, [curPortfoliSilder]);
 
   return (
     <StyleDesigner>
       <div className="container">
         <Title>
-          <h4 className="top__title">Sizlar uchun </h4>
-          <h1 className="title">Portfolio</h1>
+          <h4 className="top__title">{t("title_top")}</h4>
+          <h1 className="title">{t("navbar_portfolio")}</h1>
         </Title>
-
-        <StyleDesignList>
-          <div className="type__div">
-            {list.map((item, index) => {
-              const { id, type, images } = item;
-              return (
-                <div
-                  className="type__item"
-                  key={id}
-                  onClick={() => changeTypeDesign(index)}
-                >
-                  <span
-                    className={
-                      activeIndex === index
-                        ? "type__span active__span"
-                        : "type__span"
-                    }
+        {loading ? (
+          <h1>Loading....</h1>
+        ) : (
+          <StyleDesignList>
+            <div className="type__div">
+              {[...services].map((item, index) => {
+                const { service_name_uz, service_id, service_name_ru } = item;
+                return (
+                  <div
+                    key={service_id}
+                    className="type__item"
+                    onClick={() => changeCurSer(item, index)}
                   >
-                    {images.length}
-                  </span>
-                  <h5 className={activeIndex === index ? "active__h5" : ""}>
-                    {type}
-                  </h5>
-                </div>
-              );
-            })}
-          </div>
+                    <span
+                      className={
+                        index === activeIndex
+                          ? "type__span active__span"
+                          : "type__span"
+                      }
+                    >
+                      {}
+                    </span>
+                    <h5 className={activeIndex === index ? "active__h5" : ""}>
+                      {curtLangId === 1 ? service_name_ru : service_name_uz}
+                    </h5>
+                  </div>
+                );
+              })}
+            </div>
+            {loading ? (
+              <h1>Loading.....</h1>
+            ) : (
+              <div className="gallery">
+                {currentSer?.portfolios.map((i) => (
+                  <div
+                    className="picture"
+                    key={i.portfolio_id}
+                    onClick={() => handleSliderArray(i.portfolio_images)}
+                  >
+                    <img
+                      src={
+                        "http://admin.dinex.uz/files/" + i.portfolio_images[0]
+                      }
+                      alt="img"
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
 
-          <div className="gallery">
-            {list[activeIndex].images.map((val) => {
-              return (
-                <div className="picture" key={val.id}>
-                  <img src={val.photo} alt={val.photo} />
-                </div>
-              );
-            })}
-          </div>
-
-          <div className="more__btn">
-            <Button seemore>Ko’proq ko’rish</Button>
-          </div>
-        </StyleDesignList>
+            <div className="more__btn">
+              <Button seemore>{t("more_bnt_txt")}</Button>
+            </div>
+          </StyleDesignList>
+        )}
       </div>
     </StyleDesigner>
   );
@@ -80,12 +116,16 @@ const StyleDesignList = styled.div`
   .type__div {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 120px;
 
+    overflow: auto;
+    &::-webkit-scrollbar {
+      width: 0;
+    }
     .type__item {
       display: flex;
       align-items: center;
-      gap: 9px;
+      gap: 10px;
       cursor: pointer;
 
       .type__span {
@@ -111,6 +151,7 @@ const StyleDesignList = styled.div`
         line-height: 25px;
         opacity: 0.4;
         transition: 0.3s ease-in-out;
+        white-space: nowrap;
         &.active__h5 {
           line-height: 25px;
           opacity: 1;
@@ -145,6 +186,7 @@ const StyleDesignList = styled.div`
   @media (max-width: 1024px) {
     margin-top: 40px;
     .type__div {
+      gap: 10px;
       overflow: auto;
       .type__item {
         margin-right: 60px;

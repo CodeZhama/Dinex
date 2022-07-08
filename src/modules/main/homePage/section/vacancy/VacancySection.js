@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 //
 import SliderItem from "../../../../../components/slider/SliderItem";
 import Button from "../../../../../components/button";
@@ -48,6 +49,7 @@ function SamplePrevArrow(props) {
   );
 }
 export default function VacancySection() {
+  const { t } = useTranslation();
   const setting = {
     dots: false,
     nextArrow: <SampleNextArrow />,
@@ -92,12 +94,9 @@ export default function VacancySection() {
     <StyleVacancy>
       <div className="container">
         <Title>
-          <div className="top__title">Sizlar uchun! </div>
-          <div className="title">Vakansiyalar</div>
-          <div className="info">
-            Biz uchun o’z ishini sevadigan, qadryatlarga ega halol hodimlar
-            kerak
-          </div>
+          <div className="top__title">{t("title_top")}</div>
+          <div className="title">{t("vacanse_txt")}</div>
+          <div className="info">{t("text_bottom_partner")}</div>
         </Title>
 
         <SliderItem {...setting}>
@@ -131,7 +130,7 @@ export default function VacancySection() {
         </SliderItem>
         <div className="all__view">
           <Button bglight>
-            <p>Barcha ish o’rinlari</p>
+            <p>{t("all_vacancy_txt")}</p>
             <i className="icon icon-top-right icon-very-sm  " />
           </Button>
         </div>

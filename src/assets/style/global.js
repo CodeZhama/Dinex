@@ -25,6 +25,12 @@ const GlobalStyles = createGlobalStyle`
         max-width: 1230px;
         margin: 0 auto;
     }
+
+    .kill-scroll {
+        height: 100vh;
+        overflow: hidden;
+    }
+    
     @media (max-width: 1400px) {
         .container{
             padding: 0 15px;

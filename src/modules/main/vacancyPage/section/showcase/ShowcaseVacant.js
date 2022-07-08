@@ -1,25 +1,23 @@
 import React from "react";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 //
 import bg from "../../../../../assets/image/vacansy.png";
 import BackRouter from "../../../../../components/backRouter";
 import ShowcaseTitle from "../../../../../components/showcaseTitle";
 //
 const ShowcaseVacant = () => {
+  const { t } = useTranslation();
   return (
     <StyleShowcaseVacant>
       <div className="container">
         <div className="vacant__section">
-          <BackRouter>Vakansiyalar</BackRouter>
+          <BackRouter>{t("navbar_vacanse")}</BackRouter>
 
           <ShowcaseTitle vacantPage>
-            <h4>Ahil jamoa!</h4>
-            <h1 className="purposi">Biz bilan yorqin kareyrangizni boshlang</h1>
-            <p className="comment">
-              Uyingiz uchun munosib arxitektura, landshaft, eksteryer va
-              interyer xizmatlarini siz aziz mijozlarimiz uchun taklif qilamiz,
-              hamda samarali hamkorlikka chorlaymiz
-            </p>
+            <h4>{t("competent_team")}</h4>
+            <h1 className="purposi">{t("showcase_vacancy_title_desc")}</h1>
+            <p className="comment">{t("showcase__description")}</p>
           </ShowcaseTitle>
         </div>
       </div>
@@ -28,9 +26,7 @@ const ShowcaseVacant = () => {
 };
 
 const StyleShowcaseVacant = styled.div`
-  padding: 100px 0 0 0;
-  width: 100%;
-  min-height: 100vh;
+  padding: 100px 0 320px 0;
   background-image: url(${bg});
   background-size: cover;
   background-position: center;

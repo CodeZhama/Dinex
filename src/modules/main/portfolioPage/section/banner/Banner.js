@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import CountUp from "react-countup";
+import { useTranslation } from "react-i18next";
 //
 
 import bg from "../../../../../assets/image/showcase4.png";
@@ -8,20 +9,17 @@ import ShowcaseTitle from "../../../../../components/showcaseTitle";
 import BackRouter from "../../../../../components/backRouter/Back";
 //
 export default function Banner() {
+  const { t } = useTranslation();
   return (
     <StyledBanner>
       <div className="container">
         <div className="banner__item">
-          <BackRouter>Portfolio</BackRouter>
+          <BackRouter>{t("navbar_portfolio")}</BackRouter>
 
           <ShowcaseTitle portfolioPage>
-            <h4>Shinam uylar!</h4>
-            <h1 className="purposi">Bizning loyihalar</h1>
-            <p className="comment">
-              Uyingiz uchun munosib arxitektura, landshaft, eksteryer va
-              interyer xizmatlarini siz aziz mijozlarimiz uchun taklif qilamiz,
-              hamda samarali hamkorlikka chorlaymiz
-            </p>
+            <h4>{t("comfortable_houses")}</h4>
+            <h1 className="purposi">{t("our_project_btn")}</h1>
+            <p className="comment">{t("showcase__description")}</p>
           </ShowcaseTitle>
 
           <div className="banner__counts">
@@ -31,14 +29,14 @@ export default function Banner() {
                   <span>+</span>
                   <CountUp start={32} end={55} />
                 </div>
-                <h2>Dizayn xizmatlari</h2>
+                <h2>{t("navbar_designer")}</h2>
               </div>
               <div className="banner__counts__each">
                 <div className="d-fl">
                   <span>+</span>
                   <CountUp start={2} end={36} />
                 </div>
-                <h2>Ekspertiza va texnik taftish xizmati</h2>
+                <h2>{t("navbar_expert")}</h2>
               </div>
             </div>
             <div className="wrap__response">
@@ -47,21 +45,21 @@ export default function Banner() {
                   <span>+</span>
                   <CountUp start={4} end={45} />
                 </div>
-                <h2>Arxitektura</h2>
+                <h2>{t("navbar_architecture")}</h2>
               </div>
               <div className="banner__counts__each">
                 <div className="d-fl">
                   <span>+</span>
                   <CountUp start={32} end={15} />
                 </div>
-                <h2>Maket yasash</h2>
+                <h2>{t("navbar_maket_build")}</h2>
               </div>
               <div className="banner__counts__each">
                 <div className="d-fl">
                   <span>+</span>
                   <CountUp start={40} end={22} />
                 </div>
-                <h2 className="no__wrap">Toposurat va Geologiya</h2>
+                <h2 className="no__wrap">{t("navbar_topology")}</h2>
               </div>
             </div>
           </div>

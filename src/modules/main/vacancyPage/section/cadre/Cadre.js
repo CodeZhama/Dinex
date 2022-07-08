@@ -1,178 +1,34 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { v4 as uuidv4 } from "uuid";
+import { useTranslation } from "react-i18next";
 ///
 
 import Title from "../../../../../components/title/Title";
 import VacantInfo from "../../../../../components/vacantInfo";
 import Button from "../../../../../components/button";
+import { useEffect } from "react";
 ///
-export default function Cadre({ setModalActive }) {
+export default function Cadre({
+  setModalActive,
+  curVacant,
+  loading,
+  vacants,
+  services,
+  setCurVacant,
+}) {
+  const { t } = useTranslation();
   const [activeIndex, setActiveIndex] = useState(0);
-  const [select, setSelect] = useState(null);
-
-  const [item, setItem] = useState({
-    id: uuidv4(),
-    proffision: "Interyer Dizayner",
-    data: "05.12.2022",
-    salary: "6 000 000 - 10 000 000",
-    condition: "To’liq stavka",
-    time: "9:00-18:00",
-    proWeckend: "6/1",
-    experens: "Kamida 2 yil",
-
-    info: [
-      "Shinam ofis va raqobatli maosh",
-      "Tajribali va yosh jamoa bilan ishlash imkoniyati",
-      "Turli xildagi bonuslar va oromgohlar uchun chegirmalari bonuslar va chegirmalari",
-    ],
-  });
-
-  let list = [
-    {
-      id: 1,
-      type: "Dizayn xizmatlari",
-      vacants: [
-        {
-          id: uuidv4(),
-          proffision: "Interyer Dizayner",
-          data: "05.12.2022",
-          salary: "6 000 000 - 10 000 000",
-          condition: "To’liq stavka",
-          time: "9:00-18:00",
-          proWeckend: "6/1",
-          experens: "Kamida 2 yil",
-
-          info: [
-            "Shinam ofis va raqobatli maosh",
-            "Tajribali va yosh jamoa bilan ishlash imkoniyati",
-            "Turli xildagi bonuslar va oromgohlar uchun chegirmalari bonuslar va chegirmalari",
-          ],
-        },
-        {
-          id: uuidv4(),
-          proffision: "Illustratsiya disayner",
-          data: "05.12.2022",
-          salary: "3 000 000 - 5 000 000",
-          condition: "To’liq stavka",
-          time: "9:00-18:00",
-          proWeckend: "6/1",
-          six: "Erkak",
-          experens: "Kamida 2 yil",
-
-          info: [
-            "Shinam ofis va raqobatli maosh",
-            "Tajribali va yosh jamoa bilan ishlash imkoniyati",
-            "Turli xildagi bonuslar va oromgohlar uchun chegirmalari bonuslar va  chegirmalari",
-          ],
-        },
-        {
-          id: uuidv4(),
-          proffision: "Illustratsiya disayner",
-          data: "05.12.2022",
-          salary: "3 000 000 - 5 000 000",
-          condition: "To’liq stavka",
-          time: "9:00-18:00",
-          proWeckend: "6/1",
-          six: "Erkak",
-          experens: "Kamida 2 yil",
-
-          info: [
-            "Shinam ofis va raqobatli maosh",
-            "Tajribali va yosh jamoa bilan ishlash imkoniyati",
-            "Turli xildagi bonuslar va oromgohlar uchun chegirmalari bonuslar va  chegirmalari",
-          ],
-        },
-        {
-          id: uuidv4(),
-          proffision: "Illustratsiya disayner",
-          data: "05.12.2022",
-          salary: "3 000 000 - 5 000 000",
-          condition: "To’liq stavka",
-          time: "9:00-18:00",
-          proWeckend: "6/1",
-          six: "Erkak",
-          experens: "Kamida 2 yil",
-
-          info: [
-            "Shinam ofis va raqobatli maosh",
-            "Tajribali va yosh jamoa bilan ishlash imkoniyati",
-            "Turli xildagi bonuslar va oromgohlar uchun chegirmalari bonuslar va  chegirmalari",
-          ],
-        },
-        {
-          id: uuidv4(),
-          proffision: "Illustratsiya disayner",
-          data: "05.12.2022",
-          salary: "3 000 000 - 5 000 000",
-          condition: "To’liq stavka",
-          time: "9:00-18:00",
-          proWeckend: "6/1",
-          six: "Erkak",
-          experens: "Kamida 2 yil",
-
-          info: [
-            "Shinam ofis va raqobatli maosh",
-            "Tajribali va yosh jamoa bilan ishlash imkoniyati",
-            "Turli xildagi bonuslar va oromgohlar uchun chegirmalari bonuslar va  chegirmalari",
-          ],
-        },
-      ],
-    },
-    {
-      id: 2,
-      type: "Arxitektura",
-      vacants: [
-        {
-          id: uuidv4(),
-          proffision: "Illustratsiya disayner",
-          data: "05.12.2022",
-          salary: "3 000 000 - 5 000 000",
-          condition: "To’liq stavka",
-          time: "9:00-18:00",
-          proWeckend: "6/1",
-          six: "Erkak",
-          experens: "Kamida 2 yil",
-
-          info: [
-            "Shinam ofis va raqobatli maosh",
-            "Tajribali va yosh jamoa bilan ishlash imkoniyati",
-            "Turli xildagi bonuslar va oromgohlar uchun chegirmalari bonuslar va  chegirmalari",
-          ],
-        },
-      ],
-    },
-    {
-      id: 3,
-      type: "Ekspertiza va texnik taftish xizmati",
-      vacants: [],
-    },
-    {
-      id: 4,
-      type: "Toposurat va Geologiya",
-      vacants: [],
-    },
-    {
-      id: 5,
-      type: "Maket yasash",
-      vacants: [],
-    },
-  ];
-
-  function handleCurrentCategory(index) {
-    setActiveIndex(index);
-  }
-
-  function handleIndexCard(index) {
-    setItem(list[activeIndex].vacants[index]);
-    if (select === index) {
-      return setSelect(null);
-    }
-    setSelect(index);
-  }
+  const [infoVacant, setInfoVacant] = useState(0);
 
   function handleComplitionForm() {
     setModalActive(true);
+  }
+  function changeInfoVacant(item) {
+    setInfoVacant(item);
+  }
+  function changeCurrentVacant(item, index) {
+    setActiveIndex(index);
+    setCurVacant(item);
   }
 
   return (
@@ -180,59 +36,51 @@ export default function Cadre({ setModalActive }) {
       <div className="container">
         <div className="cadre">
           <Title>
-            <h4 className="top__title">Sizlar uchun</h4>
-            <h3 className="title">Vakansiyalar</h3>
+            <h4 className="top__title">{t("title_top")}</h4>
+            <h3 className="title">{t("navbar_vacanse")}</h3>
           </Title>
 
           <CardreCategory>
             <div className="category__ul">
-              {list.map((item, index) => {
-                const { id, type, vacants } = item;
+              {[...services].map((item, index) => {
+                const { service_name_uz, service_id } = item;
                 return (
                   <div
                     className="category__li"
-                    key={id}
-                    onClick={() => handleCurrentCategory(index, id)}
+                    key={service_id}
+                    onClick={() => changeCurrentVacant(item, index)}
                   >
                     <span
                       className={activeIndex === index ? "active__count" : ""}
-                    >
-                      {vacants.length}
-                    </span>
+                    ></span>
                     <p className={activeIndex === index ? "active__text" : ""}>
-                      {type}
+                      {service_name_uz}
                     </p>
                   </div>
                 );
               })}
             </div>
 
-            <div
-              className="vacant__list"
-              style={
-                list[activeIndex].vacants.length > 0
-                  ? { height: "130vh" }
-                  : { height: "0" }
-              }
-            >
+            <div className="vacant__list">
               <div className="vacant__list__item">
-                {list[activeIndex].vacants.map((wrap, index) => {
+                {curVacant?.vacancies.map((wrap, index) => {
                   const {
-                    id,
-                    proffision,
-                    data,
-                    salary,
-                    condition,
-                    time,
-                    proWeckend,
-                    info,
+                    vacancies_id,
+                    vacancies_title_uz,
+                    createdAt,
+                    vacancies_salary,
+                    vacancies_time,
+                    vacancies_experience,
+                    vacancies_working_time,
+                    vacancies_work_schedule,
+                    vacancies_we_offer_uz,
+                    vacancies_description_uz,
                   } = wrap;
-
                   return (
                     <div
                       className="info__each"
-                      onClick={() => handleIndexCard(index, id)}
-                      key={id}
+                      key={vacancies_id}
+                      onClick={() => changeInfoVacant(wrap)}
                       style={{
                         display: "flex",
                         flexDirection: "column",
@@ -241,31 +89,31 @@ export default function Cadre({ setModalActive }) {
                     >
                       <div className="card">
                         <div className="card__title">
-                          <h3>{proffision}</h3>
-                          <p>{data}</p>
+                          <h3>{vacancies_title_uz}</h3>
+                          <p>{createdAt.slice(0, 10)}</p>
                         </div>
 
                         <div className="card__salary">
                           <span>Maosh:</span>
-                          <h3>{salary}</h3>
+                          <h3>{vacancies_salary}</h3>
                         </div>
 
                         <div className="card__work__info">
                           <div className="position">
                             <i className="icon icon-briefcase" />
-                            <p>{condition}</p>
+                            <p>{vacancies_time}</p>
                           </div>
                           <div className="position">
                             <i className="icon icon-time-line" />
-                            <p>{time}</p>
+                            <p>{vacancies_working_time}</p>
                           </div>
                           <div className="position">
                             <i className="icon icon-briefcase" />
-                            <p>{proWeckend}</p>
+                            <p>{vacancies_work_schedule}</p>
                           </div>
                         </div>
                         <div className="card__comment">
-                          {info.map((value, index) => {
+                          {vacancies_we_offer_uz.map((value, index) => {
                             return (
                               <div className="card__comment__item" key={index}>
                                 <div className="icons">
@@ -277,15 +125,9 @@ export default function Cadre({ setModalActive }) {
                           })}
                         </div>
                       </div>
-                      <div
-                        className={
-                          select === index
-                            ? "vacant__hidden visibly"
-                            : "vacant__hidden"
-                        }
-                      >
-                        <VacantInfo>
-                          <div className="profission">{item.proffision}</div>
+                      <div className="vacant__hidden">
+                        <VacantInfo key={vacancies_id}>
+                          <div className="profission">{vacancies_title_uz}</div>
                           <div className="contant">
                             <h4>Ma’lumot:</h4>
                             <div className="information">
@@ -298,22 +140,28 @@ export default function Cadre({ setModalActive }) {
                                 </div>
                                 <div className="information__wrap__item">
                                   <p className="text__right">
-                                    {item.proffision}
+                                    {vacancies_title_uz}
                                   </p>
-                                  <p className="text__right">{item.experens}</p>
-                                  <p className="text__right">{item.salary}</p>
-                                  <p className="text__right">{item.time}</p>
+                                  <p className="text__right">
+                                    {vacancies_experience}
+                                  </p>
+                                  <p className="text__right">
+                                    {vacancies_salary}
+                                  </p>
+                                  <p className="text__right">
+                                    {vacancies_working_time}
+                                  </p>
                                 </div>
                               </div>
 
                               <div className="information__wrap">
-                                <div className="information__wrap__left">
+                                <div className="information__wrap__item">
                                   <p className="text__left">Yoshi:</p>
                                   <p className="text__left">Jinsi:</p>
                                   <p className="text__left">Ish reja:</p>
                                   <p className="text__left">Ish kuni:</p>
                                 </div>
-                                <div className="information__wrap__right">
+                                <div className="information__wrap__item">
                                   <p className="text__right"></p>
                                   <p className="text__right"></p>
                                   <p className="text__right"></p>
@@ -324,29 +172,12 @@ export default function Cadre({ setModalActive }) {
 
                             <div className="responsibilities">
                               <h2>Tafsilot va majburiyatlar:</h2>
-                              <p>
-                                Turli xildagi bonuslar va oromgohlar uchun
-                                chegirmalari bonuslar va oromgohlar xildagi
-                                bonuslar va oromgohlar uchun chegirmalari
-                                bonuslar va oromgohlar uchun chegirmalariuchun
-                                chegirmalari uchun chegirmalari bonuslar va
-                                oromgohlar xildagi bonuslar va oromgohlar uchun
-                                chegirmalari bonuslar va oromgohlar uchun
-                                chegirmalariuchun chegirmalari
-                              </p>
+                              <p>{vacancies_description_uz}</p>
                             </div>
 
                             <div className="offer">
                               <h2>Biz taklif qilamiz:</h2>
-                              <p>
-                                Turli xildagi bonuslar va oromgohlar uchun
-                                chegirmalari bonuslar va oromgohlar xildagi
-                                bonuslar va oromgohlar uchun chegirmalari
-                                bonuslar va oromgohlar uchun chegirmalariuchun
-                                chegirmalari uchun chegirmalari bonuslar va
-                                oromgohlar xilda bonuslar va oromgohlar uchun
-                                chegirmalari bonuslar va oromgohlar
-                              </p>
+                              <p>{vacancies_description_uz}</p>
                             </div>
 
                             <Button onClick={handleComplitionForm}>
@@ -360,9 +191,11 @@ export default function Cadre({ setModalActive }) {
                 })}
               </div>
 
-              {list[activeIndex].vacants.length > 0 ? (
+              {curVacant?.vacancies[0] && (
                 <VacantInfo desktop>
-                  <div className="profission">{item.proffision}</div>
+                  <div className="profission">
+                    {curVacant?.vacancies[0]?.vacancies_title_uz}
+                  </div>
                   <div className="contant">
                     <h4>Ma’lumot:</h4>
                     <div className="information">
@@ -374,52 +207,45 @@ export default function Cadre({ setModalActive }) {
                           <p className="text__left">Ish vaqti:</p>
                         </div>
                         <div className="information__wrap__item">
-                          <p className="text__right">{item.proffision}</p>
-                          <p className="text__right">{item.experens}</p>
-                          <p className="text__right">{item.salary}</p>
-                          <p className="text__right">{item.time}</p>
+                          <p className="text__right">
+                            {curVacant?.vacancies[0]?.vacancies_title_uz}
+                          </p>
+                          <p className="text__right">
+                            {curVacant?.vacancies[0]?.vacancies_experience}
+                          </p>
+                          <p className="text__right">
+                            {curVacant?.vacancies[0]?.vacancies_salary}
+                          </p>
+                          <p className="text__right">
+                            {curVacant?.vacancies[0]?.vacancies_working_time}
+                          </p>
                         </div>
                       </div>
 
                       <div className="information__wrap">
-                        <div className="information__wrap__left">
+                        <div className="information__wrap__item">
                           <p className="text__left">Yoshi:</p>
                           <p className="text__left">Jinsi:</p>
                           <p className="text__left">Ish reja:</p>
                           <p className="text__left">Ish kuni:</p>
                         </div>
-                        <div className="information__wrap__right">
-                          <p className="text__right"></p>
-                          <p className="text__right"></p>
-                          <p className="text__right"></p>
-                          <p className="text__right"></p>
+                        <div className="information__wrap__item">
+                          <p className="text__right">22 yosh</p>
+                          <p className="text__right">Erkak</p>
+                          <p className="text__right">222</p>
+                          <p className="text__right">222</p>
                         </div>
                       </div>
                     </div>
 
                     <div className="responsibilities">
                       <h2>Tafsilot va majburiyatlar:</h2>
-                      <p>
-                        Turli xildagi bonuslar va oromgohlar uchun chegirmalari
-                        bonuslar va oromgohlar xildagi bonuslar va oromgohlar
-                        uchun chegirmalari bonuslar va oromgohlar uchun
-                        chegirmalariuchun chegirmalari uchun chegirmalari
-                        bonuslar va oromgohlar xildagi bonuslar va oromgohlar
-                        uchun chegirmalari bonuslar va oromgohlar uchun
-                        chegirmalariuchun chegirmalari
-                      </p>
+                      <p>{curVacant?.vacancies[0]?.vacancies_description_uz}</p>
                     </div>
 
                     <div className="offer">
                       <h2>Biz taklif qilamiz:</h2>
-                      <p>
-                        Turli xildagi bonuslar va oromgohlar uchun chegirmalari
-                        bonuslar va oromgohlar xildagi bonuslar va oromgohlar
-                        uchun chegirmalari bonuslar va oromgohlar uchun
-                        chegirmalariuchun chegirmalari uchun chegirmalari
-                        bonuslar va oromgohlar xilda bonuslar va oromgohlar
-                        uchun chegirmalari bonuslar va oromgohlar
-                      </p>
+                      <p>{curVacant?.vacancies[0]?.vacancies_description_uz}</p>
                     </div>
 
                     <Button onClick={handleComplitionForm}>
@@ -427,8 +253,6 @@ export default function Cadre({ setModalActive }) {
                     </Button>
                   </div>
                 </VacantInfo>
-              ) : (
-                ""
               )}
             </div>
           </CardreCategory>
@@ -488,7 +312,8 @@ const CardreCategory = styled.div`
     align-content: flex-start;
     gap: 20px;
     margin-top: 40px;
-    
+    min-height: 130vh;
+
     &__item {
       display: flex;
       flex-direction: column;

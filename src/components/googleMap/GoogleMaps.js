@@ -1,29 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 //
-import {
-  GoogleMap,
-  withScriptjs,
-  withGoogleMap,
-  Marker,
-} from "react-google-maps";
-
-function Map() {
-  return (
-    <GoogleMap
-      defaultZoom={15}
-      defaultCenter={{ lat: 41.31528, lng: 69.28919 }}
-    >
-      <Marker position={{ lat: 41.315281, lng: 69.289192 }} />
-    </GoogleMap>
-  );
-}
-
-const WrapperMap = withScriptjs(withGoogleMap(Map));
 
 export default function GoogleMaps() {
   return (
-    <StyleGoogleMap>
+    <MapLocationStle>
       <div className="location">
         <div className="location__left">
           <div className="title">
@@ -67,17 +48,21 @@ export default function GoogleMaps() {
           </div>
         </div>
       </div>
-      <WrapperMap
-        loadingElement={<div style={{ height: "100%" }} />}
-        containerElement={<div style={{ height: "100vh" }} />}
-        mapElement={<div style={{ height: "100%" }} />}
-        googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
-      />
-    </StyleGoogleMap>
+      <iframe
+        width="100%"
+        height="650"
+        id="gmap_canvas"
+        src="https://maps.google.com/maps?q=Toshkent&t=&z=13&ie=UTF8&iwloc=&output=embed"
+        frameBorder="0"
+        scrolling="no"
+        marginHeight="0"
+        marginWidth="0"
+      ></iframe>
+    </MapLocationStle>
   );
 }
 
-const StyleGoogleMap = styled.div`
+const MapLocationStle = styled.div`
   position: relative;
   width: 100%;
   min-height: 100%;

@@ -1,67 +1,47 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
-
+import { useTranslation } from "react-i18next";
 //
+import RootContext from "../../../../../context/Context";
 import bg from "../../../../../assets/image/servesbg.png";
 import Button from "../../../../../components/button/Button";
 import Title from "../../../../../components/title/Title";
+import Api from "../../../../../services/api";
 ///
 export default function TypeServes() {
-  const [index, setIndex] = useState(0);
-  const [design, setdesign] = useState([
-    {
-      id: 1,
-      type: "Interyer dizayn",
-      info: "Interer dizayneri kasbi zamonaviy dunyodagi eng nufuzli kasblardan biridir. Va bu kasb faqat ijodkorlarning tanlovi degan ishonch mutlaqo noto'g'ri. Muvaffaqiyatli dizayner bo'lish uchun nima qilish kerak?Agar siz uyingiz uchun betakror dizayn qilinshni hohlasangiz, albatta muttaxassislarga murojat qiling.Arxitektura nazariyasi, qurilish ishlari uchun standartlar, yoritish va fitodizayn, shaharsozlik asoslari kabi bir nechta tegishli fanlarni o'zlashtirish kerak.",
-      isActive: true,
-    },
-    {
-      id: 2,
-      type: "Eksteryer dizayn",
-      info: " Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias reprehenderit quasi necessitatibus qui consectetur asperiores tenetur dolorum. Quisquam culpa iste eum maiores magnam repellendus nulla quibusdam, ipsam ad, consectetur corporis.",
-      isActive: false,
-    },
-    {
-      id: 3,
-      type: "Landshaft dizayn",
-      info: " There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything",
-      isActive: false,
-    },
-    {
-      id: 4,
-      type: "Arxitektura",
-      info: " Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias reprehenderit quasi necessitatibus qui consectetur asperiores tenetur dolorum. Quisquam culpa iste eum maiores magnam repellendus nulla quibusdam, ipsam ad, consectetur corporis.",
-      isActive: false,
-    },
-    {
-      id: 5,
-      type: "Ekspertiza va texnik taftish xizmati",
-      info: " Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias reprehenderit quasi necessitatibus qui consectetur asperiores tenetur dolorum. Quisquam culpa iste eum maiores magnam repellendus nulla quibusdam, ipsam ad, consectetur corporis.",
-      isActive: false,
-    },
-    {
-      id: 6,
-      type: "Toposurat va geologiya",
-      info: " Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias reprehenderit quasi necessitatibus qui consectetur asperiores tenetur dolorum. Quisquam culpa iste eum maiores magnam repellendus nulla quibusdam, ipsam ad, consectetur corporis.",
-      isActive: false,
-    },
-    {
-      id: 7,
-      type: "Maket yasash",
-      info: " It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
-      isActive: false,
-    },
-  ]);
+  const { t } = useTranslation();
+  const { curtLangId } = useContext(RootContext);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [typeServec, setTypeServec] = useState([]);
+  const [curSerItem, setCurSerItem] = useState(null);
 
-  function handleInfo(idd, idkey) {
-    setIndex(idd);
-    setdesign(
-      design.map((item) =>
-        item.id === idkey
-          ? { ...item, isActive: true }
-          : { ...item, isActive: false }
-      )
-    );
+  useEffect(() => {
+    getDataServece();
+  }, []);
+
+  async function getDataServece() {
+    try {
+      const { data } = await Api.get("service");
+      if (data) {
+        setTypeServec(data.data.services);
+        console.log(data.data.services);
+        setCurSerItem(data.data.services[0]);
+        setLoading(true);
+      } else {
+        console.log("Malumot topilmadi");
+      }
+    } catch (error) {
+      setLoading(true);
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  function handleActiveId(id, item) {
+    setActiveIndex(id);
+    setCurSerItem(item);
   }
 
   return (
@@ -69,32 +49,44 @@ export default function TypeServes() {
       <div className="container">
         <div className="type__servece">
           <Title servecePage>
-            <h3 className="top__title">Sizlar uchun</h3>
-            <h1 className="title">Bizning xizmatlar</h1>
+            <h3 className="top__title">{t("title_top")}</h3>
+            <h1 className="title">{t("title_center")}</h1>
           </Title>
-
-          <div className="type">
-            {design.map((item, idx) => {
-              const { type, id, isActive } = item;
-              return (
-                <div
-                  className={isActive ? "type__item active" : "type__item"}
-                  key={id}
-                  onClick={() => handleInfo(idx, id)}
-                >
-                  {type}
-                </div>
-              );
-            })}
-          </div>
-
+          {loading ? (
+            <h1>Loading...</h1>
+          ) : (
+            <div className="type">
+              {typeServec.map((item, index) => {
+                const { service_id, service_name_uz, service_name_ru } = item;
+                return (
+                  <div
+                    key={service_id}
+                    onClick={() => handleActiveId(index, item)}
+                    className={
+                      activeIndex === index ? "type__item active" : "type__item"
+                    }
+                  >
+                    {curtLangId === 1 ? service_name_ru : service_name_uz}
+                  </div>
+                );
+              })}
+            </div>
+          )}
           <div className="type__more">
-            <h1>{design[index].type}</h1>
-            <p>{design[index].info}</p>
+            <h1>
+              {curtLangId === 1
+                ? curSerItem?.service_name_ru
+                : curSerItem.service_name_uz}
+              .
+            </h1>
+            <p>
+              {curtLangId === 1
+                ? curSerItem?.service_description_ru
+                : curSerItem?.service_description_uz}
+            </p>
           </div>
-
           <div className="submit__btn">
-            <Button>Ariza qoldirish</Button>
+            <Button>{t("leave_an_app_btn")}</Button>
           </div>
         </div>
       </div>
@@ -111,18 +103,20 @@ const StyleTypeServes = styled.div`
   .type__servece {
     color: var(--light);
     .type {
-      /* display: flex;
-      justify-content: space-between; */
       display: grid;
       grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
       text-align: center;
       margin-top: 50px;
-
+      overflow-x: auto;
+      overflow-y: hidden;
+      &.type::-webkit-scrollbar {
+        width: 0;
+      }
       &__item {
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 55px 0;
+        padding: 55px 15px;
         transition: 300ms ease-in;
         color: var(--light);
         font-size: 17px;
@@ -130,6 +124,7 @@ const StyleTypeServes = styled.div`
         line-height: 23px;
         border-right: 1px solid var(--light);
         cursor: pointer;
+        white-space: nowrap;
 
         &:last-child {
           border: none;
@@ -170,17 +165,12 @@ const StyleTypeServes = styled.div`
   @media (max-width: 1024px) {
     .type__servece {
       .type {
-        overflow-x: auto;
-        overflow-y: hidden;
         &__item {
           min-width: 160px;
           padding: 38px 0;
           font-size: 17px;
           font-weight: 600;
           line-height: 23px;
-        }
-        &.type::-webkit-scrollbar {
-          width: 0;
         }
       }
 
@@ -210,7 +200,6 @@ const StyleTypeServes = styled.div`
       }
       .type__more {
         padding: 33px 0 25px 0;
-        
       }
     }
   }

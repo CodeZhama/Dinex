@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 ///
 import SliderItem from "../../../../../components/slider/SliderItem";
 import Img1 from "../../../../../assets/image/showcase.png";
@@ -7,7 +8,6 @@ import Img2 from "../../../../../assets/image/showcase4.png";
 import Img3 from "../../../../../assets/image/showcase5.png";
 import Button from "../../../../../components/button";
 import ShowcaseTitle from "../../../../../components/showcaseTitle";
-
 
 /////
 function SampleNextArrow(props) {
@@ -48,7 +48,8 @@ function SamplePrevArrow(props) {
 
 ////
 
-export default function Showcase() {
+export default function Showcase({ setModal }) {
+  const { t } = useTranslation();
   const settings = {
     dots: true,
     infinite: true,
@@ -60,6 +61,9 @@ export default function Showcase() {
     touchMove: false,
   };
 
+  function openModal() {
+    setModal(true);
+  }
   return (
     <StyleShowcase>
       <div className="showcase__slider">
@@ -73,13 +77,13 @@ export default function Showcase() {
 
         <SliderItem {...settings}>
           <div className="card">
-            <img className="showcase__img" src={Img1} alt="" />
+            <img className="showcase__img" src={Img1} alt="img" />
           </div>
           <div className="card">
-            <img className="showcase__img" src={Img2} alt="" />
+            <img className="showcase__img" src={Img2} alt="img" />
           </div>
           <div className="card">
-            <img className="showcase__img" src={Img3} alt="" />
+            <img className="showcase__img" src={Img3} alt="img" />
           </div>
         </SliderItem>
       </div>
@@ -87,21 +91,15 @@ export default function Showcase() {
         <div className="showcase__text">
           <div className="showcase__text__left">
             <ShowcaseTitle>
-              <h4>Munosibini tanlang!</h4>
-              <div className="purposi">
-                Maqsadimiz, sizlar uchun qulaylik va shinamlik yaratish
-              </div>
-              <p className="comment">
-                Uyingiz uchun munosib arxitektura, landshaft, eksteryer va
-                interyer xizmatlarini, siz aziz mijozlarimiz uchun taklif
-                qilamiz, hamda samarali hamkorlikka chorlaymiz
-              </p>
+              <h4>{t("showcase__title")}</h4>
+              <div className="purposi">{t("showcase__subtitle")}</div>
+              <p className="comment">{t("showcase__description")}</p>
             </ShowcaseTitle>
 
             <div className="showcase__btns">
-              <Button>Ariza qoldirish</Button>
+              <Button onClick={openModal}>{t("leave_an_app_btn")}</Button>
               <Button outline>
-                <p>Bizning loyihalar</p>
+                <p>{t("our_project_btn")}</p>
                 <i className="icon icon-top-right icon-very-sm" />
               </Button>
             </div>
@@ -121,12 +119,11 @@ export default function Showcase() {
 const StyleShowcase = styled.div`
   .showcase__slider {
     position: relative;
-
     .bg__lenta {
       position: absolute;
       bottom: 5px;
       right: 0;
-      z-index: 99999;
+      z-index: 99;
       background: rgba(21, 21, 21, 0.8);
       padding: 36px 296px 36px 100px;
       &__count {
@@ -172,6 +169,7 @@ const StyleShowcase = styled.div`
         background: rgba(255, 255, 255, 0.1);
         border-radius: 38px;
         transition: 0.23 linear;
+        z-index: 99;
         i {
           background-color: var(--light);
           opacity: 0.4;
@@ -199,21 +197,16 @@ const StyleShowcase = styled.div`
       height: 40px !important;
       top: 345px;
       left: 2px;
-      z-index: 9999;
+      z-index: 9;
       transform: rotate(90deg);
       .slick-active button:before {
         color: rgba(255, 255, 255, 0.5);
       }
     }
   }
-  @media (max-width: 1400px) {
+  @media (max-width: 1200px) {
     .showcase__slider {
       .slick-slider {
-        .card {
-          .showcase__img {
-            min-height: 100vh;
-          }
-        }
         .slick-arrow {
           right: 15px;
         }

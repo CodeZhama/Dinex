@@ -1,9 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 //
 export default function Back({ children, ...props }) {
+  const { t } = useTranslation();
   let navigate = useNavigate();
 
   function handleNavigate(url) {
@@ -18,7 +20,7 @@ export default function Back({ children, ...props }) {
       />
       <div className="back__active">
         <span className="back" onClick={() => handleNavigate("/")}>
-          Bosh sahifa
+          {t("navbar_home")}
         </span>
         <span className="slash">/</span>
         <span className="current">{children}</span>

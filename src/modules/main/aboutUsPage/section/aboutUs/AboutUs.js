@@ -7,6 +7,7 @@ import Title from "../../../../../components/title/Title";
 import Logo from "../../../../../assets/image/Logo.png";
 import Img1 from "../../../../../assets/image/aboutimg.png";
 import Img2 from "../../../../../assets/image/aboutImg2.png";
+import { t } from "i18next";
 
 //
 export default function AboutUs() {
@@ -15,11 +16,9 @@ export default function AboutUs() {
       <div className="container">
         <div className="about__section">
           <Title>
-            <h3 className="top__title">2016 yildan beri siz bilan</h3>
-            <h2 className="title">Biz haqimizda batafsil</h2>
-            <p className="info">
-              Bizlar siz uchun eng zamonaviy xizmatlarni taklif qilamiz
-            </p>
+            <h3 className="top__title">{t("title_since")}</h3>
+            <h2 className="title">{t("navbar_about_us")}</h2>
+            <p className="info">{t("title_bottom")}</p>
           </Title>
 
           <div className="about__section__item">
@@ -33,25 +32,8 @@ export default function AboutUs() {
               <div>
                 <img className="section__img" src={Img2} alt="img" />
               </div>
-              <h2 className="section__text">Bizning kompaniya</h2>
-              <p>
-                Interer dizayner kabi kasblar zamonaviy dunyodagi eng nufuzli
-                kasblardan biridir va bu kasb faqat ijodkorlarning tanlovi degan
-                tushuncha mutlaqo noto'g'ri. Malakali dizaynerlar sizning
-                mushkulingizga bir zumda sifatli va zamonaviy yechim topa oladi
-                va uni hal qiladi.
-                <br />
-                Agar siz uyingiz uchun betakror dizayn qilishga qaror qilgan
-                bo’lsangiz, albatta mutahassisga murojatqilishingiz lozim.
-                <br />
-                Arxitektura nazariyasi, qurilish ishlari uchun standartlar,
-                yoritish va fitodizayn, shaharsozlik asoslari kabi bir nechta
-                tegishli fanlarni o'zlashtirish kerak.
-                <br />
-                Shu sababli biz sizlar uchun eng zamonaviy hamda sifatli
-                hizmatlarni taklif qilamiz, hamda sizlarni biz bilan hamkorlikka
-                chorlaymiz.
-              </p>
+              <h2 className="section__text">{t("showcase_company_txt")}</h2>
+              <p>{t("about_us_page_more_txt")}</p>
             </div>
           </div>
         </div>
@@ -161,12 +143,12 @@ const StyleAboutUs = styled.div`
     }
   }
 
-  @media (max-width: 1000px) {
+  @media (max-width: 1024px) {
     .about__section {
       &__item {
         &__right {
           .section__img {
-            width: 420px;
+            width: 440px;
           }
         }
       }
@@ -188,7 +170,7 @@ const StyleAboutUs = styled.div`
       &__item {
         &__right {
           .section__img {
-            width: 360px;
+            width: 420px;
           }
           .section__text {
             margin: 70px 0 20px 0;
@@ -202,7 +184,7 @@ const StyleAboutUs = styled.div`
       &__item {
         &__right {
           .section__img {
-            width: 340px;
+            width: 380px;
           }
           .section__text {
             margin: 60px 0 20px 0;
@@ -211,26 +193,8 @@ const StyleAboutUs = styled.div`
       }
     }
   }
+
   @media (max-width: 768px) {
-    .about__section {
-      &__item {
-        &__right {
-          .logo__check {
-            top: -270px;
-          }
-          .section__img {
-            top: -289px;
-            width: 290px;
-            min-height: 280px;
-          }
-          .section__text {
-            margin: 49px 0 20px 0;
-          }
-        }
-      }
-    }
-  }
-  @media (max-width: 600px) {
     .about__section {
       &__item {
         flex-direction: column-reverse;
@@ -238,7 +202,7 @@ const StyleAboutUs = styled.div`
         &__right {
           .logo__check {
             top: 31px;
-          }w
+          }
           .section__img {
             width: 100%;
             position: initial;

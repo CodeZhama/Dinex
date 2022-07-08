@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
+
 //
 import Img1 from "../../../../../assets/image/potfolio1.png";
 import Img2 from "../../../../../assets/image/portfolio2.png";
@@ -16,20 +18,19 @@ import Title from "../../../../../components/title";
 import Button from "../../../../../components/button";
 //
 export default function Portfolio() {
+  const { t } = useTranslation();
   return (
     <StylePortfolio>
       <div className="container">
         <div className="display__none">
           <Title info>
-            <h5 className="top__title">Sizlar uchun</h5>
-            <h2 className="title">Portfolio</h2>
-            <p className="info">
-              Mijozlarimiz uchun bajargan eng yaxshi loyihalarimiz
-            </p>
+            <h5 className="top__title">{t("title_top")}</h5>
+            <h2 className="title">{t("title_portfolio")}</h2>
+            <p className="info">{t("title_portfolio_desc")}</p>
           </Title>
           <Button blue>
-            <h3>Barcha Loyihalar</h3>
-            <i className="icon icon-top-right icon-very-sm " />
+            <h3>{t("text_all_project")}</h3>
+            <i className="icon icon-top-right icon-very-sm "/>
           </Button>
         </div>
 
@@ -37,7 +38,7 @@ export default function Portfolio() {
           <LeftStyle>
             <EffectImg desktop>
               <div className="inner__style">
-                <h4 className="text__effect">Comodo</h4>
+                <h4 className="text__effect">{t("comodo")}</h4>
                 <img className="img__effect" src={quadrat} alt="quadrat" />
               </div>
               <img className="bg__img" src={Img1} alt="img1" />
@@ -46,7 +47,7 @@ export default function Portfolio() {
             <div className="image__left__two">
               <EffectImg>
                 <div className="inner__style">
-                  <h4 className="text__effect">Comodo</h4>
+                  <h4 className="text__effect">{t("comodo")}</h4>
                   <img className="img__effect" src={quadrat} alt="quadrat" />
                 </div>
                 <img className="bg__img" src={Img9} alt="img1" />
@@ -56,7 +57,7 @@ export default function Portfolio() {
             <div className="image__left__three">
               <EffectImg response>
                 <div className="inner__style">
-                  <h4 className="text__effect">Comodo</h4>
+                  <h4 className="text__effect">{t("comodo")}</h4>
                   <img className="img__effect" src={quadrat} alt="quadrat" />
                 </div>
                 <img className="bg__img" src={Img8} alt="img1" />
@@ -65,7 +66,7 @@ export default function Portfolio() {
 
             <div className="projects">
               <h2>+100</h2>
-              <h4>Loyihalar</h4>
+              <h4>{t("text_project")}</h4>
             </div>
           </LeftStyle>
 
@@ -74,7 +75,7 @@ export default function Portfolio() {
               <div className="right__top__image">
                 <EffectImg>
                   <div className="inner__style">
-                    <h4 className="text__effect">Comodo</h4>
+                    <h4 className="text__effect">{t("comodo")}</h4>
                     <img className="img__effect" src={quadrat} alt="quadrat" />
                   </div>
                   <img className="bg__img" src={Img2} alt="img2" />
@@ -83,14 +84,12 @@ export default function Portfolio() {
 
               <div className="right__top__title">
                 <Title info>
-                  <h5 className="top__title">Sizlar uchun</h5>
-                  <h2 className="title">Portfolio</h2>
-                  <p className="info">
-                    Mijozlarimiz uchun bajargan eng yaxshi loyihalarimiz
-                  </p>
+                  <h5 className="top__title">{t("title_top")}</h5>
+                  <h2 className="title">{t("title_portfolio")}</h2>
+                  <p className="info">{t("title_portfolio_desc")}</p>
                 </Title>
                 <Button blue>
-                  <h3>Barcha Loyihalar</h3>
+                  <h3>{t("text_all_project")}</h3>
                   <i className="icon icon-top-right icon-very-sm " />
                 </Button>
               </div>
@@ -101,7 +100,7 @@ export default function Portfolio() {
                 <EffectImg>
                   <img className="bg__img" src={Img3} alt="img2" />
                   <div className="inner__style">
-                    <h4 className="text__effect">Comodo</h4>
+                    <h4 className="text__effect">{t("comodo")}</h4>
                     <img className="img__effect" src={quadrat} alt="quadrat" />
                   </div>
                 </EffectImg>
@@ -110,7 +109,7 @@ export default function Portfolio() {
               <div className="right__bottom__center">
                 <EffectImg>
                   <div className="inner__style">
-                    <h4 className="text__effect">Comodo</h4>
+                    <h4 className="text__effect">{t("comodo")}</h4>
                     <img className="img__effect" src={quadrat} alt="quadrat" />
                   </div>
                   <img className="bg__img" src={Img4} alt="img2" />
@@ -118,14 +117,14 @@ export default function Portfolio() {
 
                 <EffectImg heigthResponse>
                   <div className="inner__style">
-                    <h4 className="text__effect">Comodo</h4>
+                    <h4 className="text__effect">{t("comodo")}</h4>
                     <img className="img__effect" src={quadrat} alt="quadrat" />
                   </div>
                   <img className="bg__img" src={Img5} alt="img5" />
                 </EffectImg>
                 <EffectImg center>
                   <div className="inner__style">
-                    <h4 className="text__effect">Comodo</h4>
+                    <h4 className="text__effect">{t("comodo")}</h4>
                     <img className="img__effect" src={quadrat} alt="quadrat" />
                   </div>
                   <img className="bg__img" src={Img6} alt="img5" />
@@ -135,7 +134,7 @@ export default function Portfolio() {
               <div className="right__bottom__right">
                 <EffectImg imgSix>
                   <div className="inner__style">
-                    <h4 className="text__effect">Comodo</h4>
+                    <h4 className="text__effect">{t("comodo")}</h4>
                     <img className="img__effect" src={quadrat} alt="quadrat" />
                   </div>
                   <img className="bg__img" src={Img6} alt="img2" />

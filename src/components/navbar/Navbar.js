@@ -1,17 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import i18next from "i18next";
+import RootContext from "../../context/Context";
 ///
 import Logo from "../../../src/components/logo";
 import Input from "../input/Input";
+import { useTranslation } from "react-i18next";
 //
 export default function Navbar() {
   let navigate = useNavigate();
-
+  const { lang, curtLangId, setCurLangId } = useContext(RootContext);
+  const { t } = useTranslation();
   //
   const [navModal, setNavModal] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
   const [fix, setFix] = useState(false);
+
   //
   let activeStyle = {
     borderBottom: "2px solid #ffffff",
@@ -43,6 +48,11 @@ export default function Navbar() {
     setNavModal(false);
   }
 
+  function handleChaneLang(code, id) {
+    i18next.changeLanguage(code);
+    setCurLangId(id);
+  }
+
   useEffect(() => {
     if (navModal) document.body.style.overflow = "hidden";
     else document.body.removeAttribute("style");
@@ -70,12 +80,22 @@ export default function Navbar() {
           </div>
           <div className="modal__flex">
             <ul>
-              <li onClick={() => modalNavigate("/")}>Bosh sahifa</li>
-              <li onClick={() => modalNavigate("about")}>Biz haqimizda</li>
-              <li onClick={() => modalNavigate("serveces")}>Xizmatlar</li>
-              <li onClick={() => modalNavigate("toplam")}>Portfolio</li>
-              <li onClick={() => modalNavigate("vacansy")}>Vakansiya</li>
-              <li onClick={() => modalNavigate("contact")}>Kontak</li>
+              <li onClick={() => modalNavigate("/")}>{t("navbar_home")}</li>
+              <li onClick={() => modalNavigate("about")}>
+                {t("navbar_about_us")}
+              </li>
+              <li onClick={() => modalNavigate("serveces")}>
+                {t("navbar_service")}
+              </li>
+              <li onClick={() => modalNavigate("toplam")}>
+                {t("navbar_portfolio")}
+              </li>
+              <li onClick={() => modalNavigate("vacansy")}>
+                {t("navbar_vacanse")}
+              </li>
+              <li onClick={() => modalNavigate("contact")}>
+                {t("navbar_contact")}
+              </li>
             </ul>
             <div className="modal__social">
               <i className="icon icon-facebook" />
@@ -84,8 +104,22 @@ export default function Navbar() {
             </div>
 
             <div className="modal__language">
-              <span className="uz">Uz</span>
-              <span className="rus">Rus</span>
+              {lang.map((item) => {
+                const { code, id, text_uz, text_ru } = item;
+                return (
+                  <p
+                    key={id}
+                    className={
+                      curtLangId === id
+                        ? "modal__language__item change__modal__color"
+                        : "modal__language__item"
+                    }
+                    onClick={() => handleChaneLang(code, id)}
+                  >
+                    {curtLangId === 1 ? text_ru : text_uz}
+                  </p>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -99,12 +133,22 @@ export default function Navbar() {
             </div>
 
             <div className="language">
-              <p className="language__uzb" style={{ color: "#ffffff" }}>
-                Uz
-              </p>
-              <p className="language__rus" style={{ color: "#d0d0d0" }}>
-                Rus
-              </p>
+              {lang.map((item) => {
+                const { code, id, text_uz, text_ru } = item;
+                return (
+                  <p
+                    key={id}
+                    className={
+                      curtLangId === id
+                        ? "language_item change_color"
+                        : "language_item"
+                    }
+                    onClick={() => handleChaneLang(code, id)}
+                  >
+                    {curtLangId === 1 ? text_ru : text_uz}
+                  </p>
+                );
+              })}
             </div>
 
             <div className="nav">
@@ -115,7 +159,7 @@ export default function Navbar() {
                       to="/"
                       style={({ isActive }) => (isActive ? activeStyle : null)}
                     >
-                      Bosh sahifa
+                      {t("navbar_home")}
                     </NavLink>
                   </li>
                   <li className="nav__li">
@@ -123,7 +167,7 @@ export default function Navbar() {
                       to="/about"
                       style={({ isActive }) => (isActive ? activeStyle : null)}
                     >
-                      Biz haqimizda
+                      {t("navbar_about_us")}
                     </NavLink>
                   </li>
                   <li className="nav__li">
@@ -131,7 +175,7 @@ export default function Navbar() {
                       to="/serveces"
                       style={({ isActive }) => (isActive ? activeStyle : null)}
                     >
-                      Xizmatlar
+                      {t("navbar_service")}
                     </NavLink>
                   </li>
                   <li className="nav__li">
@@ -139,7 +183,7 @@ export default function Navbar() {
                       to="/toplam"
                       style={({ isActive }) => (isActive ? activeStyle : null)}
                     >
-                      Portfolio
+                      {t("navbar_portfolio")}
                     </NavLink>
                   </li>
                   <li className="nav__li">
@@ -147,7 +191,7 @@ export default function Navbar() {
                       to="/vacansy"
                       style={({ isActive }) => (isActive ? activeStyle : null)}
                     >
-                      Vakansiyalar
+                      {t("navbar_vacanse")}
                     </NavLink>
                   </li>
                   <li className="nav__li">
@@ -155,7 +199,7 @@ export default function Navbar() {
                       to="/contact"
                       style={({ isActive }) => (isActive ? activeStyle : null)}
                     >
-                      Kontakt
+                      {t("navbar_contact")}
                     </NavLink>
                   </li>
                 </ul>
@@ -266,12 +310,12 @@ const StyledNavbar = styled.div`
         font-weight: 600;
         line-height: 27px;
         letter-spacing: 0em;
-        .rus {
-          cursor: pointer;
-          opacity: 0.4;
-        }
-        .uz {
-          cursor: pointer;
+        cursor: pointer;
+        &__item {
+          color: #787a77;
+          &.change__modal__color {
+            color: var(--light);
+          }
         }
       }
     }
@@ -316,6 +360,13 @@ const StyledNavbar = styled.div`
         align-items: center;
         gap: 6px;
         margin-right: 104px;
+        cursor: pointer;
+        .language_item {
+          color: #787a77;
+          &.change_color {
+            color: var(--light);
+          }
+        }
       }
 
       .nav {

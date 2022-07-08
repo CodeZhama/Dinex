@@ -22,7 +22,7 @@ const StyleTitle = styled.div`
     margin-bottom: 13px;
   }
   & > .info {
-    max-width: 309px;
+    max-width: 340px;
     font-size: 16px;
     font-weight: 400;
     line-height: 24px;
@@ -52,7 +52,7 @@ const StyleTitle = styled.div`
         max-width: 230px;
         margin-bottom: 113px;
       }
-      @media (max-width: 1200px) {
+      @media (max-width: 1024px) {
         .top__title {
           margin-top: 0;
         }
@@ -67,14 +67,11 @@ const StyleTitle = styled.div`
     ourservesTwo &&
     css`
       .top__title {
-        margin-top: 107px;
       }
       .info {
         max-width: 230px;
-        margin-bottom: 88px;
       }
-
-      @media (max-width: 1200px) {
+      @media (max-width: 700px) {
         display: none;
       }
     `}
@@ -87,8 +84,6 @@ const StyleTitle = styled.div`
       .top__title {
         opacity: initial;
       }
-
-
     `}
 
 

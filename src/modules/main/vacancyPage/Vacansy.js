@@ -5,10 +5,17 @@ import Cadre from "./section/cadre/Cadre";
 import ShowcaseVacant from "./section/showcase/ShowcaseVacant";
 import modalbg from "../../../assets/image/servesbg2.png";
 import Application from "../../../components/application";
+import Api from "../../../services/api/index";
 
 //
 export default function Vacansy() {
   const [modalActive, setModalActive] = useState(false);
+
+  const [loading, setLoading] = useState(true);
+  const [services, setServices] = useState([]);
+  const [curVacant, setCurVacant] = useState(null);
+  //
+
   useEffect(() => {
     if (modalActive) document.body.style.overflow = "hidden";
     else document.body.removeAttribute("style");
@@ -17,6 +24,24 @@ export default function Vacansy() {
     };
   }, [modalActive]);
 
+  useEffect(() => {
+    getAllCadre();
+  }, []);
+
+  async function getAllCadre() {
+    try {
+      const response = await Api.get("/service", {
+        params: {
+          page: 0,
+          size: 10,
+        },
+      });
+      setServices(response.data.data.services);
+      setCurVacant(response.data.data.services[0]);
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <StyleVacansy>
       {modalActive ? (
@@ -34,7 +59,13 @@ export default function Vacansy() {
       )}
 
       <ShowcaseVacant />
-      <Cadre setModalActive={setModalActive} />
+      <Cadre
+        setModalActive={setModalActive}
+        loading={loading}
+        services={services}
+        curVacant={curVacant}
+        setCurVacant={setCurVacant}
+      />
     </StyleVacansy>
   );
 }

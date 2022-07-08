@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-
+// import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 ///
 import list from "./static";
 import Title from "../title/Title";
@@ -50,6 +51,8 @@ function SamplePrevArrow(props) {
 
 ////
 const PartnerComponent = () => {
+  const { t } = useTranslation();
+  // const navigate = useNavigate();
   var setting = {
     dots: false,
     infinite: true,
@@ -94,12 +97,9 @@ const PartnerComponent = () => {
     <StylePartner>
       <div className="container">
         <Title>
-          <div className="top__title">Eng qadrdonlar!</div>
-          <div className="title">Bizning Hamkorlar</div>
-          <div className="info">
-            Biz uchun o’z ishini sevadigan, qadryatlarga ega halol hodimlar
-            kerak
-          </div>
+          <div className="top__title">{t("text_top_partner")}</div>
+          <div className="title">{t("text_center_partner")}</div>
+          <div className="info">{t("text_bottom_partner")}</div>
         </Title>
         <div className="partner__slider">
           <SliderItem {...setting}>
@@ -151,7 +151,6 @@ const StylePartner = styled.div`
         position: absolute;
         width: 60px;
         height: 60px;
-        /* background-color: var(--color-navbar); */
         border: 0.7px solid #e4e4e4;
         border-radius: 50%;
         cursor: pointer;
@@ -177,12 +176,12 @@ const StylePartner = styled.div`
         }
       }
       .slick-dots {
-        bottom: -50px;
+        bottom: -60px;
       }
     }
   }
   @media (max-width: 600px) {
-    padding: 60px 0 80px 0;
+    padding: 60px 0 90px 0;
     .partner__slider {
       .slick-arrow {
         display: none !important;

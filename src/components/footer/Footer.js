@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 //
 import styled from "styled-components";
 import Logo from "../../assets/image/Logo.png";
@@ -7,6 +8,7 @@ import bg from "../../assets/image/FooterImg.png";
 
 //
 export default function Footer() {
+  const { t } = useTranslation();
   return (
     <FatherStyle>
       <FooterStyle>
@@ -14,10 +16,8 @@ export default function Footer() {
           <div className="footer__navbar">
             <div className="logo__social">
               <img src={Logo} alt="img" />
-              <p className="text__wrap">
-                Biz doimo mijozlarimiz haqida qayg’uramiz va ularni qadrlaymiz
-              </p>
-              <h2 className="social__title">Ijtimoiy sahifalarimiz</h2>
+              <p className="text__wrap">{t("footer_logo_under_text")}</p>
+              <h2 className="social__title">{t("social_txt")}</h2>
               <div className="social">
                 <i className="icon icon-instagram" />
                 <i className="icon icon-telegram" />
@@ -27,65 +27,65 @@ export default function Footer() {
             </div>
 
             <div className="list">
-              <h2 className="li__title">Bosh sahifa</h2>
+              <h2 className="li__title">{t("navbar_home")}</h2>
 
               <ul>
                 <li>
-                  <NavLink to="/">Biz haqimizda</NavLink>
+                  <NavLink to="/">{t("navbar_about_us")}</NavLink>
                 </li>
                 <li>
-                  <NavLink to="/">Xizmatlar</NavLink>
+                  <NavLink to="/">{t("navbar_service")}</NavLink>
                 </li>
                 <li>
-                  <NavLink to="/">Portfolio</NavLink>
+                  <NavLink to="/">{t("navbar_portfolio")}</NavLink>
                 </li>
                 <li>
-                  <NavLink to="/">Vakansiyalar</NavLink>
+                  <NavLink to="/">{t("navbar_vacanse")}</NavLink>
                 </li>
                 <li>
-                  <NavLink to="/">Hamkorlar</NavLink>
+                  <NavLink to="/">{t("navbar_partner")}</NavLink>
                 </li>
               </ul>
             </div>
 
             <div className="list">
-              <h2 className="li__title">Xizmatlar</h2>
+              <h2 className="li__title">{t("navbar_service")}</h2>
               <ul>
                 <li>
-                  <NavLink to="/">Dizayn xizmatlari</NavLink>
+                  <NavLink to="/">{t("navbar_designer")}</NavLink>
                 </li>
                 <li>
-                  <NavLink to="/">Arxitektura</NavLink>
+                  <NavLink to="/">{t("navbar_architecture")}</NavLink>
                 </li>
                 <li>
-                  <NavLink to="/">Maket yasash</NavLink>
+                  <NavLink to="/">{t("navbar_maket_build")}</NavLink>
                 </li>
                 <li>
-                  <NavLink to="/">Toposurat va geologiya</NavLink>
+                  <NavLink to="/">{t("navbar_topology")}</NavLink>
                 </li>
                 <li>
-                  <NavLink to="/">Expertiza va texnik taftish</NavLink>
+                  <NavLink to="/">{t("navbar_expert")}</NavLink>
                 </li>
               </ul>
             </div>
 
             <div className="list">
-              <h2 className="li__title">Vakansiyalar</h2>
+              <h2 className="li__title">{t("navbar_vacanse")}</h2>
               <ul>
                 <li>
-                  <NavLink to="/">Kompaniya bo`limlari</NavLink>
+                  <NavLink to="/">{t("navbar_company")}</NavLink>
                 </li>
                 <li>
-                  <NavLink to="/">Bo`sh ish o`rinlari</NavLink>
+                  <NavLink to="/">{t("navbar_vacanse")}</NavLink>
                 </li>
                 <li>
-                  <NavLink to="/">So`nggi qo`shilganlar</NavLink>
+                  <NavLink to="/">{t("navbar_recent")}</NavLink>
                 </li>
               </ul>
             </div>
 
             <div className="list">
-              <h2>Kontaktlar</h2>
+              <h2>{t("navbar_contact")}</h2>
               <ul>
                 <li className="info__dinex">
                   <NavLink to="/">
@@ -102,10 +102,7 @@ export default function Footer() {
                 <li className="info__dinex">
                   <NavLink to="/">
                     <i className="icon icon-location icon-sm" />
-                    <p>
-                      Abdulla qodiriy ko’chasi, 1A, <br />
-                      Mo’ljal: Oliy sud
-                    </p>
+                    <p>{t("navbar_location")}</p>
                   </NavLink>
                 </li>
               </ul>
@@ -129,7 +126,7 @@ export default function Footer() {
       </FooterStyle>
       <div className="container">
         <FooterBottomStyle>
-          <div>2021-2022 Denux Ebginering</div>
+          <div>2021-2022 Dinex Ebginering</div>
           <div>Terms of privacy policy</div>
         </FooterBottomStyle>
       </div>
@@ -193,7 +190,7 @@ const FooterStyle = styled.div`
 
     .list {
       & > h2 {
-        font-size: 24px;
+        font-size: 22px;
         font-weight: 400;
         line-height: 24px;
         letter-spacing: 0em;
@@ -286,7 +283,6 @@ const FooterStyle = styled.div`
     }
   }
   @media (max-width: 992px) {
-    
     .footer__navbar {
       display: grid;
       grid-template-columns: 1fr 1fr;

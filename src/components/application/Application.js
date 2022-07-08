@@ -1,33 +1,67 @@
 import React from "react";
-import styled, { css } from "styled-components";
+import { useState } from "react";
+import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 //
 import quadrat from "../../../src/assets/image/quadrat.png";
 import Button from "../../components/button";
+import Api from "../../services/api";
 //
 export default function Application() {
-  function handleSubmit(e) {
-    e.preventDefault();
-    console.log("Hello");
+  const { t } = useTranslation();
+  const [fullName, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [comment, setComment] = useState("");
+
+  async function PostApplication() {
+    try {
+      const res = await Api.post("application", {
+        application_fullname: fullName,
+        application_phone: phone,
+        application_description: comment,
+      });
+      setName("");
+      setPhone("");
+      setComment("");
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
+  function hancleSubmit(e) {
+    e.preventDefault();
+  }
   return (
     <StyleApplication>
       <div className="form__control">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={hancleSubmit}>
           <div className="titles">
-            <h2>Ariza qoldirish</h2>
-            <h3 className="subtitle">
-              Biz uchun o’z ishini sevadigan, qadryatlarga ega halol hodimlar
-              kerak
-            </h3>
+            <h2>{t("leave_an_app_btn")}</h2>
+            <h3 className="subtitle">{t("application_subtitle")}</h3>
           </div>
           <div className="inputs">
-            <input type="text" placeholder="F.I.O" />
-            <input type="text" placeholder="Telefon*" />
-            <input type="text" placeholder="Tafsilot" />
+            <input
+              type="text"
+              value={fullName}
+              onChange={(e) => setName(e.target.value)}
+              placeholder={t("application_input_name")}
+            />
+            <input
+              type="text"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              placeholder={t("application_input_phone")}
+            />
+            <input
+              type="text"
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              placeholder={t("application_input_dec")}
+            />
           </div>
-          <div className="app__btn">
-            <Button long>Yuborish</Button>
+          <div className="app__btn" onClick={PostApplication}>
+            <Button long>{t("send_btn")}</Button>
           </div>
         </form>
       </div>
@@ -58,6 +92,7 @@ const StyleApplication = styled.div`
           line-height: 24px;
           opacity: 0.7;
           margin-bottom: 40px;
+          max-width: 447px;
         }
       }
 
@@ -97,13 +132,12 @@ const StyleApplication = styled.div`
     align-items: center;
     justify-content: flex-end;
     img {
-      display: block;
     }
   }
 
   @media (max-width: 1024px) {
     .form__control {
-      padding: 25px 28px 0 28px;
+      padding: 25px 28px 35px 28px;
       form {
         .titles {
           .subtitle {
@@ -117,7 +151,7 @@ const StyleApplication = styled.div`
     }
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 650px) {
     .form__control {
       form {
         .titles {

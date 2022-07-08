@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 //
 import BackRouter from "../../../../../components/backRouter";
 import bg from "../../../../../assets/image/showcase.png";
@@ -7,19 +8,18 @@ import ShowcaseTitle from "../../../../../components/showcaseTitle/ShowcaseTitle
 
 //
 export default function ShowcaseAbout() {
+  const { t } = useTranslation();
   return (
     <StyleShowcase>
       <div className="container">
         <div className="showcase">
-          <BackRouter>Biz haqimizda</BackRouter>
+          <BackRouter>{t("navbar_about_us")}</BackRouter>
 
           <ShowcaseTitle aboutSection>
-            <h4>Munosibini tanlang!</h4>
-            <div className="purposi">Bizning kompaniya</div>
+            <h4>{t("showcase__title")}</h4>
+            <div className="purposi">{t("showcase_company_txt")}</div>
             <p className="comment">
-              Uyingiz uchun munosib arxitektura, landshaft, eksteryer va
-              interyer xizmatlarini siz aziz mijozlarimiz uchun taklif qilamiz,
-              hamda samarali hamkorlikka chorlaymiz!
+              {t("showcase__description")}
             </p>
           </ShowcaseTitle>
         </div>
@@ -29,9 +29,7 @@ export default function ShowcaseAbout() {
 }
 
 const StyleShowcase = styled.div`
-  width: 100%;
   padding: 110px 0 290px 0;
-  min-height: 100vh;
   background-image: url(${bg});
   background-repeat: no-repeat;
   background-size: cover;

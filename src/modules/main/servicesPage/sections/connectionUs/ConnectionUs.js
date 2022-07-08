@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 //
 import bg from "../../../../../assets/image/servesbg2.png";
 import Application from "../../../../../components/application";
@@ -8,6 +9,7 @@ import ForApp from "../../../../../components/forApp";
 
 ///
 export default function ConnectionUs() {
+  const { t } = useTranslation()
   return (
     <StyleConnectionUs>
       <div className="container">
@@ -15,7 +17,7 @@ export default function ConnectionUs() {
           <div className="for__app">
             <div className="logo__text">
               <img src={Logo} alt="logo" />
-              <h3>Biz bilan yorqin kelajak quring!</h3>
+              <h3>{t("logo_description")}</h3>
             </div>
             <Application />
           </div>
