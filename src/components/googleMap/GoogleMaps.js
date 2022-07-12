@@ -1,34 +1,34 @@
 import React from "react";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 //
 
 export default function GoogleMaps() {
+  const { t } = useTranslation();
   return (
     <MapLocationStle>
       <div className="location">
         <div className="location__left">
           <div className="title">
-            <p>Biz bilan aloqa</p>
+            <p>{t("connect_us")}</p>
             <i className="icon icon-down" />
           </div>
 
           <div className="content">
-            <h4 className="info__text">Elektron pochta:</h4>
+            <h4 className="info__text">{t("email")}</h4>
 
             <div className="massage__phone">
               <i className="icon icon-message" />
               <p>dinex@gmail.com</p>
             </div>
 
-            <h4 className="info__text">Telefon raqam:</h4>
+            <h4 className="info__text">{t("phone_number")}</h4>
             <div className="massage__phone">
               <i className="icon icon-phone" />
               <p>+998 55 500 55 25</p>
             </div>
 
-            <h3 className="info__text">
-              Ijtimoiy tarmoqlardagi sahifalarimiz:
-            </h3>
+            <h3 className="info__text">{t("social_txt")}:</h3>
             <div className="socials">
               <div className="socials__link">
                 <i className="icon icon-instagram" />
@@ -38,12 +38,10 @@ export default function GoogleMaps() {
               </div>
             </div>
 
-            <h4 className="info__text">Manzilimiz:</h4>
+            <h4 className="info__text">{t("location_title")}</h4>
             <div className="massage__phone">
               <i className="icon icon-location" />
-              <p className="address">
-                Abdulla qodiriy ko’chasi, 1A,Mo’ljal: Oliy sud
-              </p>
+              <p className="address">{t("navbar_location")}</p>
             </div>
           </div>
         </div>
@@ -71,7 +69,7 @@ const MapLocationStle = styled.div`
     position: absolute;
     bottom: 4%;
     left: 1%;
-    z-index: 9999;
+    z-index: 99;
     &__left {
       padding: 28px 103px 44px 31px;
       background: var(--light);

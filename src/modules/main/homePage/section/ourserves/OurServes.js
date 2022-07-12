@@ -1,43 +1,17 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
-import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import RootContext from "../../../../../context/Context";
+import { useNavigate } from "react-router-dom";
 //
+import RootContext from "../../../../../context/Context";
 import Title from "../../../../../components/title/Title";
 import Quadrat from "../../../../../assets/image/quadrat.png";
-import Api from "../../../../../services/api";
-import { useNavigate } from "react-router-dom";
 
 //
-export default function OurServes() {
+export default function OurServes({ loading, typeServec }) {
   const { curtLangId } = useContext(RootContext);
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const [typeServec, setTypeServec] = useState();
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    getServecesData();
-  }, []);
-
-  async function getServecesData() {
-    try {
-      const { data } = await Api.get("service");
-      if (data) {
-        setTypeServec(data.data.services);
-        console.log(data.data.services);
-        setLoading(true);
-      } else {
-        console.lof("Malumot topilmadi");
-      }
-    } catch (error) {
-      setLoading(true);
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  }
 
   function rootToService(url) {
     navigate(url);

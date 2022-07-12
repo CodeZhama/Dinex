@@ -312,7 +312,7 @@ const StyledNavbar = styled.div`
         letter-spacing: 0em;
         cursor: pointer;
         &__item {
-          color: #787a77;
+          color: #c3c3c3;
           &.change__modal__color {
             color: var(--light);
           }
@@ -362,7 +362,7 @@ const StyledNavbar = styled.div`
         margin-right: 104px;
         cursor: pointer;
         .language_item {
-          color: #787a77;
+          color: #c3c3c3;
           &.change_color {
             color: var(--light);
           }

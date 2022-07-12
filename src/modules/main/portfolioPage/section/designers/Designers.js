@@ -48,7 +48,12 @@ export default function Designers({
           <StyleDesignList>
             <div className="type__div">
               {[...services].map((item, index) => {
-                const { service_name_uz, service_id, service_name_ru } = item;
+                const {
+                  service_name_uz,
+                  service_id,
+                  service_name_ru,
+                  portfolios,
+                } = item;
                 return (
                   <div
                     key={service_id}
@@ -62,7 +67,7 @@ export default function Designers({
                           : "type__span"
                       }
                     >
-                      {}
+                      {portfolios ? portfolios.length : ""}
                     </span>
                     <h5 className={activeIndex === index ? "active__h5" : ""}>
                       {curtLangId === 1 ? service_name_ru : service_name_uz}
@@ -116,7 +121,7 @@ const StyleDesignList = styled.div`
   .type__div {
     display: flex;
     align-items: center;
-    gap: 120px;
+    gap: 60px;
 
     overflow: auto;
     &::-webkit-scrollbar {

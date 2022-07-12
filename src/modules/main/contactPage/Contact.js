@@ -1,15 +1,17 @@
 import React from "react";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 /////
 import BackRouter from "../../../components/backRouter";
 import bg from "../../../assets/image/cantact.png";
 import MapLocation from "../../../components/googleMap/GoogleMaps";
 ////
 export default function Contact() {
+  const { t } = useTranslation();
   return (
     <StyledContact>
       <div className="container">
-        <BackRouter>Kontakt</BackRouter>
+        <BackRouter>{t("navbar_contact")}</BackRouter>
         <div className="adress">
           <MapLocation />
         </div>

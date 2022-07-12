@@ -1,12 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
+import RootContext from "../../../../../context/Context";
 ///
-
 import Title from "../../../../../components/title/Title";
 import VacantInfo from "../../../../../components/vacantInfo";
 import Button from "../../../../../components/button";
-import { useEffect } from "react";
 ///
 export default function Cadre({
   setModalActive,
@@ -17,246 +16,412 @@ export default function Cadre({
   setCurVacant,
 }) {
   const { t } = useTranslation();
+  const { curtLangId } = useContext(RootContext);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [infoVacant, setInfoVacant] = useState(0);
+  const [infoVacant, setInfoVacant] = useState(null);
+  const [openResInfo, setOpenResInfo] = useState(null);
 
   function handleComplitionForm() {
     setModalActive(true);
   }
-  function changeInfoVacant(item) {
+  function changeInfoVacant(item, index, vacancies_id) {
     setInfoVacant(item);
+
+    if (vacancies_id) {
+      setOpenResInfo(null);
+    }
+    setOpenResInfo(vacancies_id);
   }
   function changeCurrentVacant(item, index) {
     setActiveIndex(index);
     setCurVacant(item);
+    setInfoVacant(null);
   }
-
   return (
     <StyleCadre>
       <div className="container">
-        <div className="cadre">
-          <Title>
-            <h4 className="top__title">{t("title_top")}</h4>
-            <h3 className="title">{t("navbar_vacanse")}</h3>
-          </Title>
+        {loading ? (
+          <h1>Loading....</h1>
+        ) : (
+          <div className="cadre">
+            <Title>
+              <h4 className="top__title">{t("title_top")}</h4>
+              <h3 className="title">{t("navbar_vacanse")}</h3>
+            </Title>
 
-          <CardreCategory>
-            <div className="category__ul">
-              {[...services].map((item, index) => {
-                const { service_name_uz, service_id } = item;
-                return (
-                  <div
-                    className="category__li"
-                    key={service_id}
-                    onClick={() => changeCurrentVacant(item, index)}
-                  >
-                    <span
-                      className={activeIndex === index ? "active__count" : ""}
-                    ></span>
-                    <p className={activeIndex === index ? "active__text" : ""}>
-                      {service_name_uz}
-                    </p>
-                  </div>
-                );
-              })}
-            </div>
-
-            <div className="vacant__list">
-              <div className="vacant__list__item">
-                {curVacant?.vacancies.map((wrap, index) => {
+            <CardreCategory>
+              <div className="category__ul">
+                {[...services].map((item, index) => {
                   const {
-                    vacancies_id,
-                    vacancies_title_uz,
-                    createdAt,
-                    vacancies_salary,
-                    vacancies_time,
-                    vacancies_experience,
-                    vacancies_working_time,
-                    vacancies_work_schedule,
-                    vacancies_we_offer_uz,
-                    vacancies_description_uz,
-                  } = wrap;
+                    service_name_uz,
+                    service_id,
+                    service_name_ru,
+                    vacancies,
+                  } = item;
                   return (
                     <div
-                      className="info__each"
-                      key={vacancies_id}
-                      onClick={() => changeInfoVacant(wrap)}
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: "30px",
-                      }}
+                      className="category__li"
+                      key={service_id}
+                      onClick={() => changeCurrentVacant(item, index)}
                     >
-                      <div className="card">
-                        <div className="card__title">
-                          <h3>{vacancies_title_uz}</h3>
-                          <p>{createdAt.slice(0, 10)}</p>
-                        </div>
-
-                        <div className="card__salary">
-                          <span>Maosh:</span>
-                          <h3>{vacancies_salary}</h3>
-                        </div>
-
-                        <div className="card__work__info">
-                          <div className="position">
-                            <i className="icon icon-briefcase" />
-                            <p>{vacancies_time}</p>
-                          </div>
-                          <div className="position">
-                            <i className="icon icon-time-line" />
-                            <p>{vacancies_working_time}</p>
-                          </div>
-                          <div className="position">
-                            <i className="icon icon-briefcase" />
-                            <p>{vacancies_work_schedule}</p>
-                          </div>
-                        </div>
-                        <div className="card__comment">
-                          {vacancies_we_offer_uz.map((value, index) => {
-                            return (
-                              <div className="card__comment__item" key={index}>
-                                <div className="icons">
-                                  <i className="icon icon-check-line icon-sm" />
-                                </div>
-                                <div className="text__info">{value}</div>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      </div>
-                      <div className="vacant__hidden">
-                        <VacantInfo key={vacancies_id}>
-                          <div className="profission">{vacancies_title_uz}</div>
-                          <div className="contant">
-                            <h4>Ma’lumot:</h4>
-                            <div className="information">
-                              <div className="information__wrap">
-                                <div className="information__wrap__item">
-                                  <p className="text__left">Lavozim:</p>
-                                  <p className="text__left">Tajriba:</p>
-                                  <p className="text__left">Maosh:</p>
-                                  <p className="text__left">Ish vaqti:</p>
-                                </div>
-                                <div className="information__wrap__item">
-                                  <p className="text__right">
-                                    {vacancies_title_uz}
-                                  </p>
-                                  <p className="text__right">
-                                    {vacancies_experience}
-                                  </p>
-                                  <p className="text__right">
-                                    {vacancies_salary}
-                                  </p>
-                                  <p className="text__right">
-                                    {vacancies_working_time}
-                                  </p>
-                                </div>
-                              </div>
-
-                              <div className="information__wrap">
-                                <div className="information__wrap__item">
-                                  <p className="text__left">Yoshi:</p>
-                                  <p className="text__left">Jinsi:</p>
-                                  <p className="text__left">Ish reja:</p>
-                                  <p className="text__left">Ish kuni:</p>
-                                </div>
-                                <div className="information__wrap__item">
-                                  <p className="text__right"></p>
-                                  <p className="text__right"></p>
-                                  <p className="text__right"></p>
-                                  <p className="text__right"></p>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="responsibilities">
-                              <h2>Tafsilot va majburiyatlar:</h2>
-                              <p>{vacancies_description_uz}</p>
-                            </div>
-
-                            <div className="offer">
-                              <h2>Biz taklif qilamiz:</h2>
-                              <p>{vacancies_description_uz}</p>
-                            </div>
-
-                            <Button onClick={handleComplitionForm}>
-                              Ariza qoldirish
-                            </Button>
-                          </div>
-                        </VacantInfo>
-                      </div>
+                      <span
+                        className={activeIndex === index ? "active__count" : ""}
+                      >
+                        {vacancies ? vacancies.length : "0"}
+                      </span>
+                      <p
+                        className={activeIndex === index ? "active__text" : ""}
+                      >
+                        {curtLangId === 1 ? service_name_ru : service_name_uz}
+                      </p>
                     </div>
                   );
                 })}
               </div>
 
-              {curVacant?.vacancies[0] && (
-                <VacantInfo desktop>
-                  <div className="profission">
-                    {curVacant?.vacancies[0]?.vacancies_title_uz}
-                  </div>
-                  <div className="contant">
-                    <h4>Ma’lumot:</h4>
-                    <div className="information">
-                      <div className="information__wrap">
-                        <div className="information__wrap__item">
-                          <p className="text__left">Lavozim:</p>
-                          <p className="text__left">Tajriba:</p>
-                          <p className="text__left">Maosh:</p>
-                          <p className="text__left">Ish vaqti:</p>
+              <div className="vacant__list">
+                <div className="vacant__list__item">
+                  {curVacant?.vacancies.map((wrap, index) => {
+                    const {
+                      vacancies_id,
+                      vacancies_title_uz,
+                      vacancies_title_ru,
+                      createdAt,
+                      vacancies_salary,
+                      vacancies_time,
+                      vacancies_experience,
+                      vacancies_working_time,
+                      vacancies_work_schedule,
+                      vacancies_we_offer_uz,
+                      vacancies_description_uz,
+                      vacancies_we_offer_ru,
+                      vacancies_description_ru,
+                    } = wrap;
+                    return (
+                      <div
+                        className="info__each"
+                        key={vacancies_id}
+                        onClick={() =>
+                          changeInfoVacant(wrap, index, vacancies_id)
+                        }
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: "30px",
+                        }}
+                      >
+                        <div className="card">
+                          <div className="card__title">
+                            <h3>
+                              {curtLangId === 0
+                                ? vacancies_title_uz
+                                : vacancies_title_ru}
+                            </h3>
+                            <p>{createdAt.slice(0, 10)}</p>
+                          </div>
+
+                          <div className="card__salary">
+                            <span>{t("text_salary")}:</span>
+                            <h3>{vacancies_salary}</h3>
+                          </div>
+
+                          <div className="card__work__info">
+                            <div className="position">
+                              <i className="icon icon-briefcase" />
+                              <p>{vacancies_time}</p>
+                            </div>
+                            <div className="position">
+                              <i className="icon icon-time-line" />
+                              <p>{vacancies_working_time}</p>
+                            </div>
+                            <div className="position">
+                              <i className="icon icon-briefcase" />
+                              <p>{vacancies_work_schedule}</p>
+                            </div>
+                          </div>
+                          <div className="card__comment">
+                            {curtLangId === 0
+                              ? vacancies_we_offer_uz.map((value, index) => {
+                                  return (
+                                    <div
+                                      className="card__comment__item"
+                                      key={index}
+                                    >
+                                      <div className="icons">
+                                        <i className="icon icon-check-line icon-sm" />
+                                      </div>
+                                      <div className="text__info">{value}</div>
+                                    </div>
+                                  );
+                                })
+                              : vacancies_we_offer_ru.map((value, index) => {
+                                  return (
+                                    <div
+                                      className="card__comment__item"
+                                      key={index}
+                                    >
+                                      <div className="icons">
+                                        <i className="icon icon-check-line icon-sm" />
+                                      </div>
+                                      <div className="text__info">{value}</div>
+                                    </div>
+                                  );
+                                })}
+                          </div>
                         </div>
-                        <div className="information__wrap__item">
-                          <p className="text__right">
-                            {curVacant?.vacancies[0]?.vacancies_title_uz}
-                          </p>
-                          <p className="text__right">
-                            {curVacant?.vacancies[0]?.vacancies_experience}
-                          </p>
-                          <p className="text__right">
-                            {curVacant?.vacancies[0]?.vacancies_salary}
-                          </p>
-                          <p className="text__right">
-                            {curVacant?.vacancies[0]?.vacancies_working_time}
-                          </p>
+                        <div
+                          className={
+                            openResInfo === vacancies_id
+                              ? "vacant__hidden visibly"
+                              : "vacant__hidden"
+                          }
+                        >
+                          <VacantInfo key={vacancies_id}>
+                            <div className="profission">
+                              {curtLangId === 0
+                                ? vacancies_title_uz
+                                : vacancies_title_ru}
+                            </div>
+                            <div className="contant">
+                              <h4>{t("text_information")}:</h4>
+                              <div className="information">
+                                <div className="information__wrap">
+                                  <div className="information__wrap__item">
+                                    <p className="text__left">
+                                      {t("text_profission")}:
+                                    </p>
+                                    <p className="text__left">
+                                      {t("text_experience")}:
+                                    </p>
+                                    <p className="text__left">
+                                      {t("text_salary")}:
+                                    </p>
+                                    <p className="text__left">
+                                      {t("text_work_time")}:
+                                    </p>
+                                  </div>
+                                  <div className="information__wrap__item">
+                                    <p className="text__right">
+                                      {curtLangId === 0
+                                        ? vacancies_title_uz
+                                        : vacancies_title_ru}
+                                    </p>
+                                    <p className="text__right">
+                                      {vacancies_experience}
+                                    </p>
+                                    <p className="text__right">
+                                      {vacancies_salary}
+                                    </p>
+                                    <p className="text__right">
+                                      {vacancies_working_time}
+                                    </p>
+                                  </div>
+                                </div>
+
+                                <div className="information__wrap">
+                                  <div className="information__wrap__item">
+                                    <p className="text__left">{t("sex")}:</p>
+                                    <p className="text__left">
+                                      {t("text_work_plan")}:
+                                    </p>
+                                    <p className="text__left">
+                                      {t("text_work_day")}:
+                                    </p>
+                                  </div>
+                                  <div className="information__wrap__item">
+                                    <p className="text__right">Erkak</p>
+                                    <p className="text__right">
+                                      {vacancies_time}
+                                    </p>
+                                    <p className="text__right">
+                                      {vacancies_work_schedule}
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div className="responsibilities">
+                                <h2>{t("details_and_oligations")}:</h2>
+                                <p>
+                                  {curtLangId === 0
+                                    ? vacancies_description_uz
+                                    : vacancies_description_ru}
+                                </p>
+                              </div>
+
+                              <Button onClick={handleComplitionForm}>
+                                {t("application_title")}
+                              </Button>
+                            </div>
+                          </VacantInfo>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {infoVacant ? (
+                  <VacantInfo desktop>
+                    <div className="profission">
+                      {curtLangId === 0
+                        ? infoVacant.vacancies_title_uz
+                        : infoVacant.vacancies_title_ru}
+                    </div>
+                    <div className="contant">
+                      <h4>Ma’lumot:</h4>
+                      <div className="information">
+                        <div className="information__wrap">
+                          <div className="information__wrap__item">
+                            <p className="text__left">
+                              {t("text_profission")}:
+                            </p>
+                            <p className="text__left">
+                              {t("text_experience")}:
+                            </p>
+                            <p className="text__left">{t("text_salary")}:</p>
+                            <p className="text__left">{t("text_work_time")}:</p>
+                          </div>
+                          <div className="information__wrap__item">
+                            <p className="text__right">
+                              {curtLangId === 0
+                                ? infoVacant.vacancies_title_uz
+                                : infoVacant.vacancies_title_ru}
+                            </p>
+                            <p className="text__right">
+                              {infoVacant.vacancies_experience}
+                            </p>
+                            <p className="text__right">
+                              {infoVacant.vacancies_salary}
+                            </p>
+                            <p className="text__right">
+                              {infoVacant.vacancies_working_time}
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="information__wrap">
+                          <div className="information__wrap__item">
+                            <p className="text__left">{t("sex")}:</p>
+                            <p className="text__left">{t("text_work_plan")}:</p>
+                            <p className="text__left">{t("text_work_day")}:</p>
+                          </div>
+                          <div className="information__wrap__item">
+                            <p className="text__right">Erkak</p>
+                            <p className="text__right">
+                              {infoVacant.vacancies_time}
+                            </p>
+                            <p className="text__right">
+                              {infoVacant.vacancies_work_schedule}
+                            </p>
+                          </div>
                         </div>
                       </div>
 
-                      <div className="information__wrap">
-                        <div className="information__wrap__item">
-                          <p className="text__left">Yoshi:</p>
-                          <p className="text__left">Jinsi:</p>
-                          <p className="text__left">Ish reja:</p>
-                          <p className="text__left">Ish kuni:</p>
-                        </div>
-                        <div className="information__wrap__item">
-                          <p className="text__right">22 yosh</p>
-                          <p className="text__right">Erkak</p>
-                          <p className="text__right">222</p>
-                          <p className="text__right">222</p>
-                        </div>
+                      <div className="responsibilities">
+                        <h2>{t("we_offer")}:</h2>
+                        <p>{infoVacant.vacancies_description_uz}</p>
                       </div>
-                    </div>
 
-                    <div className="responsibilities">
-                      <h2>Tafsilot va majburiyatlar:</h2>
-                      <p>{curVacant?.vacancies[0]?.vacancies_description_uz}</p>
+                      <Button onClick={handleComplitionForm}>
+                        {t("application_title")}
+                      </Button>
                     </div>
+                  </VacantInfo>
+                ) : (
+                  curVacant?.vacancies[0] && (
+                    <VacantInfo desktop>
+                      <div className="profission">
+                        {curtLangId === 0
+                          ? curVacant?.vacancies[0]?.vacancies_title_uz
+                          : curVacant?.vacancies[0]?.vacancies_title_ru}
+                      </div>
+                      <div className="contant">
+                        <h4>{t("text_information")}:</h4>
+                        <div className="information">
+                          <div className="information__wrap">
+                            <div className="information__wrap__item">
+                              <p className="text__left">
+                                {t("text_profission")}:
+                              </p>
+                              <p className="text__left">
+                                {t("text_experience")}:
+                              </p>
+                              <p className="text__left">{t("text_salary")}:</p>
+                              <p className="text__left">
+                                {t("text_work_time")}:
+                              </p>
+                            </div>
+                            <div className="information__wrap__item">
+                              <p className="text__right">
+                                {curtLangId === 0
+                                  ? curVacant?.vacancies[0]?.vacancies_title_uz
+                                  : curVacant?.vacancies[0]?.vacancies_title_ru}
+                              </p>
+                              <p className="text__right">
+                                {curVacant?.vacancies[0]?.vacancies_experience}
+                              </p>
+                              <p className="text__right">
+                                {curVacant?.vacancies[0]?.vacancies_salary}
+                              </p>
+                              <p className="text__right">
+                                {
+                                  curVacant?.vacancies[0]
+                                    ?.vacancies_working_time
+                                }
+                              </p>
+                            </div>
+                          </div>
 
-                    <div className="offer">
-                      <h2>Biz taklif qilamiz:</h2>
-                      <p>{curVacant?.vacancies[0]?.vacancies_description_uz}</p>
-                    </div>
+                          <div className="information__wrap">
+                            <div className="information__wrap__item">
+                              <p className="text__left">{t("sex")}:</p>
+                              <p className="text__left">
+                                {t("text_work_plan")}:
+                              </p>
+                              <p className="text__left">
+                                {t("text_work_day")}:
+                              </p>
+                            </div>
+                            <div className="information__wrap__item">
+                              <p className="text__right">Erkak</p>
+                              <p className="text__right">
+                                {
+                                  curVacant?.vacancies[0]
+                                    ?.vacancies_working_time
+                                }
+                              </p>
+                              <p className="text__right">
+                                {
+                                  curVacant?.vacancies[0]
+                                    ?.vacancies_work_schedule
+                                }
+                              </p>
+                            </div>
+                          </div>
+                        </div>
 
-                    <Button onClick={handleComplitionForm}>
-                      Ariza qoldirish
-                    </Button>
-                  </div>
-                </VacantInfo>
-              )}
-            </div>
-          </CardreCategory>
-        </div>
+                        <div className="responsibilities">
+                          <h2>{t("details_and_oligations")}:</h2>
+                          <p>
+                            {curtLangId === 0
+                              ? curVacant?.vacancies[0]
+                                  ?.vacancies_description_uz
+                              : curVacant?.vacancies[0]
+                                  ?.vacancies_description_ru}
+                          </p>
+                        </div>
+
+                        <Button onClick={handleComplitionForm}>
+                          {t("application_title")}
+                        </Button>
+                      </div>
+                    </VacantInfo>
+                  )
+                )}
+              </div>
+            </CardreCategory>
+          </div>
+        )}
       </div>
     </StyleCadre>
   );
@@ -273,8 +438,11 @@ const CardreCategory = styled.div`
   .category__ul {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-
+    gap: 66px;
+    overflow: auto;
+    &::-webkit-scrollbar {
+      width: 0;
+    }
     .category__li {
       display: flex;
       align-items: center;
@@ -312,16 +480,16 @@ const CardreCategory = styled.div`
     align-content: flex-start;
     gap: 20px;
     margin-top: 40px;
-    min-height: 130vh;
-
     &__item {
       display: flex;
       flex-direction: column;
       gap: 25px;
+      max-height: 800px;
       overflow-y: scroll;
       &::-webkit-scrollbar {
         width: 0;
       }
+      border: 1px solid red;
       .info__each {
         .card {
           padding: 30px 20px;
@@ -435,6 +603,7 @@ const CardreCategory = styled.div`
       &__item {
         .info__each {
           .vacant__hidden {
+            display: none;
             &.visibly {
               display: block;
             }

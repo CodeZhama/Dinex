@@ -2,10 +2,13 @@ import React from "react";
 import { useState } from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 //
 import quadrat from "../../../src/assets/image/quadrat.png";
 import Button from "../../components/button";
 import Api from "../../services/api";
+
 //
 export default function Application() {
   const { t } = useTranslation();
@@ -20,6 +23,7 @@ export default function Application() {
         application_phone: phone,
         application_description: comment,
       });
+      toast.success(t("send_message"));
       setName("");
       setPhone("");
       setComment("");
@@ -34,6 +38,7 @@ export default function Application() {
   }
   return (
     <StyleApplication>
+      <ToastContainer autoClose={1000}/>
       <div className="form__control">
         <form onSubmit={hancleSubmit}>
           <div className="titles">

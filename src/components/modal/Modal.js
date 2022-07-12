@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import styled, { css } from "styled-components";
-import Application from "../application";
 
-export default function Modal({ children, setModal, ...props }) {
+export default function Modal({ children, setModal, close, ...props }) {
   useEffect(() => {
     let body = document.body;
 
@@ -14,8 +13,14 @@ export default function Modal({ children, setModal, ...props }) {
   }, []);
 
   function closeModal() {
-    setModal(false);
+    if (setModal) {
+      setModal(false);
+    }
+    if (close) {
+      close();
+    }
   }
+
   return (
     <StyledModal {...props}>
       <div className="container">
@@ -50,6 +55,7 @@ const StyledModal = styled.div`
       position: absolute;
       top: 6%;
       right: 20%;
+      z-index: 11;
       i {
         background-color: var(--light);
       }
@@ -84,7 +90,7 @@ const StyledModal = styled.div`
           padding: 540px 40px;
           .slick-slider {
             .card {
-              height: 600px ;
+              height: 600px;
             }
           }
         }

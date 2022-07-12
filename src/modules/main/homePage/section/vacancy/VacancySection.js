@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 //
 import SliderItem from "../../../../../components/slider/SliderItem";
 import Button from "../../../../../components/button";
@@ -50,6 +51,7 @@ function SamplePrevArrow(props) {
 }
 export default function VacancySection() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const setting = {
     dots: false,
     nextArrow: <SampleNextArrow />,
@@ -90,6 +92,9 @@ export default function VacancySection() {
     ],
   };
 
+  function toVacancyPage(url) {
+    navigate(url);
+  }
   return (
     <StyleVacancy>
       <div className="container">
@@ -101,7 +106,11 @@ export default function VacancySection() {
 
         <SliderItem {...setting}>
           {list.map((item) => (
-            <div key={item.id} className="card">
+            <div
+              key={item.id}
+              className="card"
+              onClick={() => toVacancyPage("/vacansy")}
+            >
               <h2 className="specialist">{item.specialist}</h2>
               <div className="salary">{item.salary}</div>
               <div className="demand">Talablar:{item.demand}</div>
@@ -128,7 +137,7 @@ export default function VacancySection() {
             </div>
           ))}
         </SliderItem>
-        <div className="all__view">
+        <div className="all__view" onClick={()=>toVacancyPage("/vacansy")}>
           <Button bglight>
             <p>{t("all_vacancy_txt")}</p>
             <i className="icon icon-top-right icon-very-sm  " />

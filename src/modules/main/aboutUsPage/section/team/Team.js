@@ -1,24 +1,34 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
-
+import RootContext from "../../../../../context/Context";
 //
 import team from "./static";
 import Quadrat from "../../../../../assets/image/quadrat.png";
 //
 export default function Team() {
+  const { curtLangId } = useContext(RootContext);
   return (
     <StyleTeam>
       <div className="container">
         <TeamGrid>
           {team.map((value) => {
-            const { id, prof, firsName, info, image } = value;
+            const {
+              id,
+              prof,
+              firsName,
+              info,
+              image,
+              prof_ru,
+              info_ru,
+              firsName_ru,
+            } = value;
             return (
               <div className="team__card" key={id}>
                 <img className="team__image" src={image} alt={image} />
                 <div className="about__team">
-                  <h4>{prof}</h4>
-                  <h3>{firsName}</h3>
-                  <p className="info">{info}</p>
+                  <h4>{curtLangId === 0 ? prof : prof_ru}</h4>
+                  <h3>{curtLangId === 0 ? firsName : firsName_ru}</h3>
+                  <p className="info">{curtLangId === 0 ? info : info_ru}</p>
                   <img className="stiker" src={Quadrat} alt="quadrat" />
                 </div>
               </div>

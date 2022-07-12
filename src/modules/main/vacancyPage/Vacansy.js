@@ -30,6 +30,7 @@ export default function Vacansy() {
 
   async function getAllCadre() {
     try {
+      setLoading(true);
       const response = await Api.get("/service", {
         params: {
           page: 0,
@@ -37,9 +38,12 @@ export default function Vacansy() {
         },
       });
       setServices(response.data.data.services);
+      console.log(response.data.data.services);
       setCurVacant(response.data.data.services[0]);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   }
   return (

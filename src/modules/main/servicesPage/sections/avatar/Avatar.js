@@ -7,8 +7,12 @@ import bg from "../../../../../assets/image/showcase.png";
 import ShowcaseTitle from "../../../../../components/showcaseTitle/ShowcaseTitle";
 import Button from "../../../../../components/button/Button";
 //
-export default function Avatar() {
+export default function Avatar({ SetModalService }) {
   const { t } = useTranslation();
+
+  function handleOpenModal() {
+    SetModalService(true);
+  }
   return (
     <StyleAvatar>
       <div className="container">
@@ -29,7 +33,7 @@ export default function Avatar() {
           </div>
 
           <div className="btns">
-            <Button>{t("leave_an_app_btn")}</Button>
+            <Button onClick={handleOpenModal}>{t("leave_an_app_btn")}</Button>
             <Button outline>
               <p>{t("our_project_btn")}</p>
               <i className="icon icon-top-right icon-very-sm" />
