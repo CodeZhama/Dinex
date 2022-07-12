@@ -55,7 +55,7 @@ export default function GoogleMaps() {
         scrolling="no"
         marginHeight="0"
         marginWidth="0"
-      ></iframe>
+      />
     </MapLocationStle>
   );
 }
