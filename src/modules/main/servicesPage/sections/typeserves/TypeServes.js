@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
+import { useLocation } from "react-router-dom";
 //
 import RootContext from "../../../../../context/Context";
 import bg from "../../../../../assets/image/servesbg.png";
@@ -9,9 +10,11 @@ import Title from "../../../../../components/title/Title";
 import Api from "../../../../../services/api";
 ///
 export default function TypeServes() {
+  const { state } = useLocation();
+  console.log(state);
   const { t } = useTranslation();
   const { curtLangId } = useContext(RootContext);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(state || 0);
   const [loading, setLoading] = useState(true);
   const [typeServec, setTypeServec] = useState([]);
   const [curSerItem, setCurSerItem] = useState(null);
@@ -25,8 +28,8 @@ export default function TypeServes() {
       const { data } = await Api.get("service");
       if (data) {
         setTypeServec(data.data.services);
-        console.log(data.data.services);
-        setCurSerItem(data.data.services[0]);
+        setCurSerItem(data.data.services[state || 0]);
+        // console.log(data.data.services);
         setLoading(true);
       } else {
         console.log("Malumot topilmadi");
@@ -76,8 +79,7 @@ export default function TypeServes() {
             <h1>
               {curtLangId === 1
                 ? curSerItem?.service_name_ru
-                : curSerItem.service_name_uz}
-              .
+                : curSerItem?.service_name_uz}
             </h1>
             <p>
               {curtLangId === 1
@@ -166,8 +168,8 @@ const StyleTypeServes = styled.div`
     .type__servece {
       .type {
         &__item {
-          min-width: 160px;
-          padding: 38px 0;
+          min-width: 220px;
+          padding: 38px 15px;
           font-size: 17px;
           font-weight: 600;
           line-height: 23px;

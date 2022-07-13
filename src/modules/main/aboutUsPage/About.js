@@ -9,6 +9,8 @@ import Proposition from "./section/proposition";
 import AboutPartner from "./section/aboutpartner";
 //
 export default function About() {
+  window.scrollTo(0, 0);
+
   return (
     <AboutStyle>
       <ShowcaseAbout />

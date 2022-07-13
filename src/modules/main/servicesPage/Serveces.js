@@ -10,6 +10,8 @@ import ConnectionUs from "./sections/connectionUs/ConnectionUs";
 import TypeServes from "./sections/typeserves/TypeServes";
 ///
 export default function Serveces() {
+  window.scrollTo(0, 0);
+
   const [modalService, SetModalService] = useState(false);
 
   return (
@@ -18,7 +20,7 @@ export default function Serveces() {
       <TypeServes />
       <ConnectionUs />
       {modalService ? (
-        <Modal  close={() => SetModalService(false)}>
+        <Modal close={() => SetModalService(false)}>
           <Application />
         </Modal>
       ) : null}

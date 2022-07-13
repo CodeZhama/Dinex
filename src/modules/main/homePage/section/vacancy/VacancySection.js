@@ -2,11 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import Slider from "react-slick";
+import RootContext from "../../../../../context/Context";
+
 //
-import SliderItem from "../../../../../components/slider/SliderItem";
 import Button from "../../../../../components/button";
-import list from "./static";
 import Title from "../../../../../components/title";
+import { useContext } from "react";
 //Arrow Customs
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
@@ -49,38 +51,34 @@ function SamplePrevArrow(props) {
     </div>
   );
 }
-export default function VacancySection() {
+export default function VacancySection({ firstVacantArray }) {
   const { t } = useTranslation();
+  const { curLangId } = useContext(RootContext);
   const navigate = useNavigate();
   const setting = {
     dots: false,
-    nextArrow: <SampleNextArrow />,
+    infinite: true,
+    speed: 400,
+    slidesToShow: firstVacantArray?.vacancies?.length < 3 ? 1 : 3,
+    slidesToScroll: 1,
     prevArrow: <SamplePrevArrow />,
+    nextArrow: <SampleNextArrow />,
     responsive: [
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 2,
           slidesToScroll: 1,
           infinite: true,
-          dots: true,
+          dots: false,
           autoplay: true,
-
           autoplaySpeed: 3000,
           cssEase: "linear",
         },
       },
+
       {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-          initialSlide: 1,
-          dots: true,
-        },
-      },
-      {
-        breakpoint: 550,
+        breakpoint: 700,
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
@@ -92,9 +90,17 @@ export default function VacancySection() {
     ],
   };
 
-  function toVacancyPage(url) {
-    navigate(url);
+  function toVacancyPage(url, vacancy_id, serves_id) {
+    navigate(url, {
+      state: {
+        vacancy_id,
+        serves_id,
+      },
+    });
   }
+
+  if (!firstVacantArray) return null;
+
   return (
     <StyleVacancy>
       <div className="container">
@@ -104,40 +110,61 @@ export default function VacancySection() {
           <div className="info">{t("text_bottom_partner")}</div>
         </Title>
 
-        <SliderItem {...setting}>
-          {list.map((item) => (
-            <div
-              key={item.id}
-              className="card"
-              onClick={() => toVacancyPage("/vacansy")}
-            >
-              <h2 className="specialist">{item.specialist}</h2>
-              <div className="salary">{item.salary}</div>
-              <div className="demand">Talablar:{item.demand}</div>
-              <div className="year row">
-                <h6>Yoshi:</h6>
-                <p>{item.year}</p>
-              </div>
-              <div className="six row">
-                <h6>Jinsi:</h6>
-                <p>{item.six}</p>
-              </div>
-              <div className="experience row">
-                <h6>Tajribasi:</h6>
-                <p>{item.experience}</p>
-              </div>
-              <div className="position row">
-                <h6>Lavozimi:</h6>
-                <p>{item.position}</p>
-              </div>
-              <div className="view row row">
-                <p>{item.view}</p>
-                <i className="icon icon-top-right icon-very-sm " />
-              </div>
-            </div>
-          ))}
-        </SliderItem>
-        <div className="all__view" onClick={()=>toVacancyPage("/vacansy")}>
+        <Slider {...setting}>
+          {firstVacantArray.vacancies.length > 0
+            ? firstVacantArray?.vacancies?.map((item, index) => {
+                // console.log(item);
+                return (
+                  <div
+                    key={item.vacancies_id}
+                    className="card"
+                    onClick={() =>
+                      toVacancyPage(
+                        "/vacansy",
+                        item.vacancies_id,
+                        item.service_id
+                      )
+                    }
+                  >
+                    <h2 className="specialist">
+                      {curLangId === 0
+                        ? item.vacancies_title_uz
+                        : item.vacancies_title_ru}
+                    </h2>
+                    <div className="salary"></div>
+                    <div className="demand">{t("requirements")}:</div>
+                    <div className="year row">
+                      <div className="size_left">{t("text_experience")}:</div>
+                      <div className="size__right">
+                        {item.vacancies_experience}
+                      </div>
+                    </div>
+                    <div className="six row">
+                      <div className="size_left">{t("text_salary")}:</div>
+                      <div className="size__right">{item.vacancies_salary}</div>
+                    </div>
+                    <div className="experience row">
+                      <div className="size_left">{t("text_work_time")}:</div>
+                      <div className="size__right">
+                        {item.vacancies_working_time}
+                      </div>
+                    </div>
+                    <div className="position row">
+                      <div className="size_left">{t("text_work_day")}:</div>
+                      <div className="size__right">
+                        {item.vacancies_work_schedule}
+                      </div>
+                    </div>
+                    <div className="view row">
+                      <p>{t("all_vacancy_txt")}</p>
+                      <i className="icon icon-top-right icon-very-sm " />
+                    </div>
+                  </div>
+                );
+              })
+            : ""}
+        </Slider>
+        <div className="all__view" onClick={() => toVacancyPage("/vacansy")}>
           <Button bglight>
             <p>{t("all_vacancy_txt")}</p>
             <i className="icon icon-top-right icon-very-sm  " />
@@ -180,7 +207,7 @@ const StyleVacancy = styled.div`
         background-color: var(--light-orang);
       }
       .specialist {
-        font-size: 26px;
+        font-size: 25px;
         font-weight: 600;
         line-height: 35px;
         letter-spacing: 0em;
@@ -197,12 +224,19 @@ const StyleVacancy = styled.div`
         display: flex;
         align-items: center;
         gap: 13.5px;
-        margin-top: 9px;
-        p {
+        margin-top: 15px;
+        .size__right {
           font-size: 16px;
           font-weight: 600;
           line-height: 22px;
           letter-spacing: 0em;
+        }
+        .size_left {
+          font-size: 16px;
+          font-weight: 600;
+          line-height: 22px;
+          letter-spacing: 0em;
+          opacity: 0.5;
         }
       }
       .view {
@@ -211,7 +245,7 @@ const StyleVacancy = styled.div`
         font-weight: 600;
         line-height: 25px;
         letter-spacing: 0em;
-        margin-top: 11.5px;
+        margin-top: 25px;
         i {
           background-color: var(--orange);
           transform: rotate(45deg);

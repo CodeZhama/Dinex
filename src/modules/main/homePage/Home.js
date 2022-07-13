@@ -16,6 +16,7 @@ export default function Home() {
   const [modal, setModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const [typeServec, setTypeServec] = useState([]);
+  const [firstVacantArray, setFirstVacantArray] = useState(null);
 
   useEffect(() => {
     getServecesData();
@@ -30,12 +31,10 @@ export default function Home() {
           size: 10,
         },
       });
-      if (data) {
-        setTypeServec(data.data.services);
-        
-      } else {
-        console.lof("Malumot topilmadi");
-      }
+      setTypeServec(data.data.services);
+      setFirstVacantArray(data.data.services[0]);
+      
+      // console.log(data.data.services);
     } catch (error) {
       setLoading(true);
       console.log(error);
@@ -44,7 +43,6 @@ export default function Home() {
     }
   }
 
-
   return (
     <StyleHome>
       <Showcase setModal={setModal} />
@@ -52,7 +50,7 @@ export default function Home() {
       <Portfolio />
       <Petition />
       <Partner />
-      <Vacansy />
+      <Vacansy firstVacantArray={firstVacantArray} />
       {modal ? (
         <Modal setModal={setModal}>
           <Application />

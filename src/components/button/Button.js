@@ -83,6 +83,7 @@ const ButtonStyle = styled.button`
         letter-spacing: 0em;
         white-space: nowrap;
         padding: 0;
+        display: none;
       }
     `}
 

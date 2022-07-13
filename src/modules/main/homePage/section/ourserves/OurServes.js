@@ -13,8 +13,10 @@ export default function OurServes({ loading, typeServec }) {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  function rootToService(url) {
-    navigate(url);
+  function rootToService(url, index) {
+    navigate(url, {
+      state: index,
+    });
   }
 
   return (
@@ -32,7 +34,7 @@ export default function OurServes({ loading, typeServec }) {
                   <p className="info">{t("title_bottom")}</p>
                 </Title>
 
-                {typeServec.map((item) => {
+                {typeServec.map((item, index) => {
                   const {
                     service_id,
                     service_image,
@@ -44,7 +46,7 @@ export default function OurServes({ loading, typeServec }) {
                     <div
                       className="card"
                       key={service_id}
-                      onClick={() => rootToService("serveces")}
+                      onClick={() => rootToService("serveces", index)}
                     >
                       <img
                         className="card__tape"

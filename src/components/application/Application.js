@@ -10,7 +10,7 @@ import Button from "../../components/button";
 import Api from "../../services/api";
 
 //
-export default function Application() {
+export default function Application({ setModalActive }) {
   const { t } = useTranslation();
   const [fullName, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -27,6 +27,7 @@ export default function Application() {
       setName("");
       setPhone("");
       setComment("");
+      setModalActive(false);
       console.log(res);
     } catch (error) {
       console.log(error);
@@ -38,7 +39,7 @@ export default function Application() {
   }
   return (
     <StyleApplication>
-      <ToastContainer autoClose={1000}/>
+      <ToastContainer autoClose={1000} />
       <div className="form__control">
         <form onSubmit={hancleSubmit}>
           <div className="titles">
@@ -53,7 +54,7 @@ export default function Application() {
               placeholder={t("application_input_name")}
             />
             <input
-              type="text"
+              type="number"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               placeholder={t("application_input_phone")}

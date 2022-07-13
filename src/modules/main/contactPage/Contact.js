@@ -7,6 +7,8 @@ import bg from "../../../assets/image/cantact.png";
 import MapLocation from "../../../components/googleMap/GoogleMaps";
 ////
 export default function Contact() {
+  window.scrollTo(0, 0);
+
   const { t } = useTranslation();
   return (
     <StyledContact>

@@ -1,42 +1,66 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
-import RootContext from "../../../../../context/Context";
+import { useLocation } from "react-router-dom";
+
 ///
 import Title from "../../../../../components/title/Title";
 import VacantInfo from "../../../../../components/vacantInfo";
 import Button from "../../../../../components/button";
+import RootContext from "../../../../../context/Context";
+import { useEffect } from "react";
+
 ///
 export default function Cadre({
   setModalActive,
   curVacant,
   loading,
-  vacants,
+  // vacants,
   services,
   setCurVacant,
+  activeIndex,
+  setActiveIndex,
 }) {
+  const { state } = useLocation();
   const { t } = useTranslation();
   const { curtLangId } = useContext(RootContext);
-  const [activeIndex, setActiveIndex] = useState(0);
   const [infoVacant, setInfoVacant] = useState(null);
   const [openResInfo, setOpenResInfo] = useState(null);
+  // console.log(state.vacancy_id);
+  useEffect(() => {
+    if (!state?.serves_id || !services.length) return;
+    let tempItem = services.find((i) => i.service_id === state.serves_id);
+
+    let resultActiveInfo = tempItem.vacancies.find(
+      (j) => j.vacancies_id === state.vacancy_id
+    );
+    setInfoVacant(resultActiveInfo)
+    changeCurrentVacant(tempItem, state.serves_id);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state?.serves_id, services]);
 
   function handleComplitionForm() {
     setModalActive(true);
   }
-  function changeInfoVacant(item, index, vacancies_id) {
-    setInfoVacant(item);
 
+  function changeInfoVacant(item, vacancies_id) {
+    setInfoVacant(item);
     if (vacancies_id) {
       setOpenResInfo(null);
     }
     setOpenResInfo(vacancies_id);
   }
-  function changeCurrentVacant(item, index) {
-    setActiveIndex(index);
+
+  function changeCurrentVacant(item, idkey) {
+    setActiveIndex(idkey);
     setCurVacant(item);
-    setInfoVacant(null);
   }
+
+  useEffect(() => {
+    console.log(infoVacant);
+  }, [infoVacant]);
+
   return (
     <StyleCadre>
       <div className="container">
@@ -62,15 +86,19 @@ export default function Cadre({
                     <div
                       className="category__li"
                       key={service_id}
-                      onClick={() => changeCurrentVacant(item, index)}
+                      onClick={() => changeCurrentVacant(item, service_id)}
                     >
                       <span
-                        className={activeIndex === index ? "active__count" : ""}
+                        className={
+                          activeIndex === service_id ? "active__count" : ""
+                        }
                       >
                         {vacancies ? vacancies.length : "0"}
                       </span>
                       <p
-                        className={activeIndex === index ? "active__text" : ""}
+                        className={
+                          activeIndex === service_id ? "active__text" : ""
+                        }
                       >
                         {curtLangId === 1 ? service_name_ru : service_name_uz}
                       </p>
@@ -220,7 +248,6 @@ export default function Cadre({
 
                                 <div className="information__wrap">
                                   <div className="information__wrap__item">
-                                    <p className="text__left">{t("sex")}:</p>
                                     <p className="text__left">
                                       {t("text_work_plan")}:
                                     </p>
@@ -229,7 +256,6 @@ export default function Cadre({
                                     </p>
                                   </div>
                                   <div className="information__wrap__item">
-                                    <p className="text__right">Erkak</p>
                                     <p className="text__right">
                                       {vacancies_time}
                                     </p>
@@ -264,11 +290,11 @@ export default function Cadre({
                   <VacantInfo desktop>
                     <div className="profission">
                       {curtLangId === 0
-                        ? infoVacant.vacancies_title_uz
-                        : infoVacant.vacancies_title_ru}
+                        ? infoVacant?.vacancies_title_uz
+                        : infoVacant?.vacancies_title_ru}
                     </div>
                     <div className="contant">
-                      <h4>Ma’lumot:</h4>
+                      <h4>{t("text_information")}:</h4>
                       <div className="information">
                         <div className="information__wrap">
                           <div className="information__wrap__item">
@@ -284,34 +310,32 @@ export default function Cadre({
                           <div className="information__wrap__item">
                             <p className="text__right">
                               {curtLangId === 0
-                                ? infoVacant.vacancies_title_uz
-                                : infoVacant.vacancies_title_ru}
+                                ? infoVacant?.vacancies_title_uz
+                                : infoVacant?.vacancies_title_ru}
                             </p>
                             <p className="text__right">
-                              {infoVacant.vacancies_experience}
+                              {infoVacant?.vacancies_experience}
                             </p>
                             <p className="text__right">
-                              {infoVacant.vacancies_salary}
+                              {infoVacant?.vacancies_salary}
                             </p>
                             <p className="text__right">
-                              {infoVacant.vacancies_working_time}
+                              {infoVacant?.vacancies_working_time}
                             </p>
                           </div>
                         </div>
 
                         <div className="information__wrap">
                           <div className="information__wrap__item">
-                            <p className="text__left">{t("sex")}:</p>
                             <p className="text__left">{t("text_work_plan")}:</p>
                             <p className="text__left">{t("text_work_day")}:</p>
                           </div>
                           <div className="information__wrap__item">
-                            <p className="text__right">Erkak</p>
                             <p className="text__right">
-                              {infoVacant.vacancies_time}
+                              {infoVacant?.vacancies_working_time}
                             </p>
                             <p className="text__right">
-                              {infoVacant.vacancies_work_schedule}
+                              {infoVacant?.vacancies_work_schedule}
                             </p>
                           </div>
                         </div>
@@ -319,7 +343,11 @@ export default function Cadre({
 
                       <div className="responsibilities">
                         <h2>{t("we_offer")}:</h2>
-                        <p>{infoVacant.vacancies_description_uz}</p>
+                        <p>
+                          {curtLangId === 0
+                            ? infoVacant?.vacancies_description_uz
+                            : infoVacant?.vacancies_description_ru}
+                        </p>
                       </div>
 
                       <Button onClick={handleComplitionForm}>
@@ -374,7 +402,6 @@ export default function Cadre({
 
                           <div className="information__wrap">
                             <div className="information__wrap__item">
-                              <p className="text__left">{t("sex")}:</p>
                               <p className="text__left">
                                 {t("text_work_plan")}:
                               </p>
@@ -383,7 +410,6 @@ export default function Cadre({
                               </p>
                             </div>
                             <div className="information__wrap__item">
-                              <p className="text__right">Erkak</p>
                               <p className="text__right">
                                 {
                                   curVacant?.vacancies[0]
@@ -401,7 +427,7 @@ export default function Cadre({
                         </div>
 
                         <div className="responsibilities">
-                          <h2>{t("details_and_oligations")}:</h2>
+                          <h2>{t("we_offer")}:</h2>
                           <p>
                             {curtLangId === 0
                               ? curVacant?.vacancies[0]
@@ -489,7 +515,6 @@ const CardreCategory = styled.div`
       &::-webkit-scrollbar {
         width: 0;
       }
-      border: 1px solid red;
       .info__each {
         .card {
           padding: 30px 20px;

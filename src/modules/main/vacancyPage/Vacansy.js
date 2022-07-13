@@ -10,12 +10,13 @@ import Api from "../../../services/api/index";
 //
 export default function Vacansy() {
   const [modalActive, setModalActive] = useState(false);
-
   const [loading, setLoading] = useState(true);
   const [services, setServices] = useState([]);
   const [curVacant, setCurVacant] = useState(null);
-  //
+  const [activeIndex, setActiveIndex] = useState(null);
 
+
+  //
   useEffect(() => {
     if (modalActive) document.body.style.overflow = "hidden";
     else document.body.removeAttribute("style");
@@ -38,14 +39,17 @@ export default function Vacansy() {
         },
       });
       setServices(response.data.data.services);
-      console.log(response.data.data.services);
-      setCurVacant(response.data.data.services[0]);
+      setCurVacant(response.data.data.services[5]);
+      setActiveIndex(
+        response.data.data.services[5].service_id
+      );
     } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
     }
   }
+
   return (
     <StyleVacansy>
       {modalActive ? (
@@ -56,7 +60,7 @@ export default function Vacansy() {
             className="icon icon-close "
             onClick={() => setModalActive(false)}
           />
-          <Application />
+          <Application setModalActive={setModalActive} />
         </div>
       ) : (
         ""
@@ -69,6 +73,8 @@ export default function Vacansy() {
         services={services}
         curVacant={curVacant}
         setCurVacant={setCurVacant}
+        activeIndex={activeIndex}
+        setActiveIndex={setActiveIndex}
       />
     </StyleVacansy>
   );

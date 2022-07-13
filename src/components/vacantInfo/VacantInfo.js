@@ -36,9 +36,9 @@ const StyleVacantInfo = styled.div`
 
     .information {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       gap: 134px;
-
+        
       &__wrap {
         display: flex;
         align-items: center;

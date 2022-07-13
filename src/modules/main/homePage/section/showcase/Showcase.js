@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 ///
 import SliderItem from "../../../../../components/slider/SliderItem";
 import Img1 from "../../../../../assets/image/showcase.png";
@@ -49,6 +50,7 @@ function SamplePrevArrow(props) {
 ////
 
 export default function Showcase({ setModal }) {
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const settings = {
     dots: true,
@@ -63,6 +65,10 @@ export default function Showcase({ setModal }) {
 
   function openModal() {
     setModal(true);
+  }
+
+  function toAboutPage(url) {
+    navigate(url);
   }
   return (
     <StyleShowcase>
@@ -98,7 +104,7 @@ export default function Showcase({ setModal }) {
 
             <div className="showcase__btns">
               <Button onClick={openModal}>{t("leave_an_app_btn")}</Button>
-              <Button outline>
+              <Button outline onClick={() => toAboutPage("about")}>
                 <p>{t("our_project_btn")}</p>
                 <i className="icon icon-top-right icon-very-sm" />
               </Button>
@@ -366,7 +372,7 @@ const TextStyle = styled.div`
     .showcase__text {
       &__left {
         .showcase__btns {
-          gap: 30px;
+          gap: 15px;
         }
       }
     }
