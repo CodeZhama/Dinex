@@ -9,6 +9,7 @@ import Img2 from "../../../../../assets/image/showcase4.png";
 import Img3 from "../../../../../assets/image/showcase5.png";
 import Button from "../../../../../components/button";
 import ShowcaseTitle from "../../../../../components/showcaseTitle";
+import { useState } from "react";
 
 /////
 function SampleNextArrow(props) {
@@ -52,6 +53,11 @@ function SamplePrevArrow(props) {
 export default function Showcase({ setModal }) {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const [state, setState] = useState({
+    slideIndex: 3,
+    updateCount: 1,
+  });
+
   const settings = {
     dots: true,
     infinite: true,
@@ -61,6 +67,13 @@ export default function Showcase({ setModal }) {
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
     touchMove: false,
+    afterChange: () =>
+      setState((state) =>
+        state.updateCount === 3
+          ? { updateCount: (state.updateCount = 1) }
+          : { updateCount: state.updateCount + 1 }
+      ),
+    // beforeChange: (current, next) => this.setState({ slideIndex: next }),
   };
 
   function openModal() {
@@ -75,7 +88,7 @@ export default function Showcase({ setModal }) {
       <div className="showcase__slider">
         <div className="bg__lenta">
           <div className="bg__lenta__count">
-            <div className="current__count">01</div>
+            <div className="current__count">0{state.updateCount}</div>
             <div className="line">|</div>
             <div className="count__lenght">03</div>
           </div>

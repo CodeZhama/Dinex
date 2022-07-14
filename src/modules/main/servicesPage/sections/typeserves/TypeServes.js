@@ -8,6 +8,8 @@ import bg from "../../../../../assets/image/servesbg.png";
 import Button from "../../../../../components/button/Button";
 import Title from "../../../../../components/title/Title";
 import Api from "../../../../../services/api";
+import Modal from "../../../../../components/modal";
+import Application from "../../../../../components/application";
 ///
 export default function TypeServes() {
   const { state } = useLocation();
@@ -18,6 +20,7 @@ export default function TypeServes() {
   const [loading, setLoading] = useState(true);
   const [typeServec, setTypeServec] = useState([]);
   const [curSerItem, setCurSerItem] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     getDataServece();
@@ -45,6 +48,10 @@ export default function TypeServes() {
   function handleActiveId(id, item) {
     setActiveIndex(id);
     setCurSerItem(item);
+  }
+
+  function openModalFunc() {
+    setOpenModal(true);
   }
 
   return (
@@ -87,11 +94,18 @@ export default function TypeServes() {
                 : curSerItem?.service_description_uz}
             </p>
           </div>
-          <div className="submit__btn">
+          <div className="submit__btn" onClick={openModalFunc}>
             <Button>{t("leave_an_app_btn")}</Button>
           </div>
         </div>
       </div>
+      {openModal ? (
+        <Modal typeServesModal={() => setOpenModal(false)}>
+          <Application />
+        </Modal>
+      ) : (
+        ""
+      )}
     </StyleTypeServes>
   );
 }

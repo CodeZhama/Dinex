@@ -5,7 +5,7 @@ import Router from "./router";
 import RootContext from "./context/Context";
 
 function App() {
-  const [curtLangId, setCurLangId] = useState(1);
+  const [curtLangId, setCurLangId] = useState(0);
 
   let language = [
     {

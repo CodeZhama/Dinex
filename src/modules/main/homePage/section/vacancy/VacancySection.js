@@ -287,10 +287,10 @@ const StyleVacancy = styled.div`
   @media (max-width: 1024px) {
     padding: 120px 0;
   }
-  @media (max-width: 600px) {
+  @media (max-width: 768px) {
     padding: 60px 0;
     .all__view {
-      margin: 70px 5px 0 0;
+      margin: 90px 5px 0 0;
     }
     .slick-slider {
       .slick-arrow {

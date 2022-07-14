@@ -1,6 +1,7 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 //
 import styled from "styled-components";
 import Logo from "../../assets/image/Logo.png";
@@ -9,6 +10,11 @@ import bg from "../../assets/image/FooterImg.png";
 //
 export default function Footer() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+
+  function toRouter(url) {
+    navigate(url);
+  }
   return (
     <FatherStyle>
       <FooterStyle>
@@ -102,32 +108,22 @@ export default function Footer() {
                 <li className="info__dinex">
                   <NavLink to="/">
                     <i className="icon icon-location icon-sm" />
-                    <p>{t("navbar_location")}</p>
+                    <p className="info__dinex__location-text">
+                      {t("navbar_location")}
+                    </p>
                   </NavLink>
                 </li>
               </ul>
             </div>
-            {/* 
-            <div className="logo__social__respone">
-              <img src={Logo} alt="img" />
-              <p className="text__wrap">
-                Biz doimo mijozlarimiz haqida qayg’uramiz va ularni qadrlaymiz
-              </p>
-              <h2 className="social__title">Ijtimoiy sahifalarimiz</h2>
-              <div className="social">
-                <i className="icon icon-instagram" />
-                <i className="icon icon-telegram" />
-                <i className="icon icon-facebook" />
-                <i className="icon icon-twitter" />
-              </div>
-            </div> */}
           </div>
         </div>
       </FooterStyle>
       <div className="container">
         <FooterBottomStyle>
           <div>2021-2022 Dinex Ebginering</div>
-          <div>Terms of privacy policy</div>
+          <div>
+            <a href="https://noorgroup.uz/">Developed by Noorgroup</a>
+          </div>
         </FooterBottomStyle>
       </div>
     </FatherStyle>
@@ -184,10 +180,6 @@ const FooterStyle = styled.div`
       }
     }
 
-    /* .logo__social__respone {
-      display: none;
-    } */
-
     .list {
       & > h2 {
         font-size: 22px;
@@ -217,6 +209,13 @@ const FooterStyle = styled.div`
             }
             i {
               background-color: var(--color-navbar);
+            }
+          }
+        }
+        .info__dinex {
+          a {
+            .info__dinex__location-text {
+              max-width: 200px;
             }
           }
         }
@@ -305,5 +304,8 @@ const FooterBottomStyle = styled.div`
     font-weight: 400;
     line-height: 20px;
     letter-spacing: 0em;
+    a {
+      color: var(--light);
+    }
   }
 `;

@@ -1,7 +1,13 @@
 import React, { useEffect } from "react";
 import styled, { css } from "styled-components";
 
-export default function Modal({ children, setModal, close, ...props }) {
+export default function Modal({
+  children,
+  setModal,
+  close,
+  typeServesModal,
+  ...props
+}) {
   useEffect(() => {
     let body = document.body;
 
@@ -18,6 +24,9 @@ export default function Modal({ children, setModal, close, ...props }) {
     }
     if (close) {
       close();
+    }
+    if (typeServesModal) {
+      typeServesModal();
     }
   }
 

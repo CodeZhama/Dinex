@@ -34,7 +34,7 @@ export default function Cadre({
     let resultActiveInfo = tempItem.vacancies.find(
       (j) => j.vacancies_id === state.vacancy_id
     );
-    setInfoVacant(resultActiveInfo)
+    setInfoVacant(resultActiveInfo);
     changeCurrentVacant(tempItem, state.serves_id);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

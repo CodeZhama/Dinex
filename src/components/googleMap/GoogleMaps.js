@@ -48,14 +48,14 @@ export default function GoogleMaps() {
       </div>
       <iframe
         width="100%"
-        height="650"
+        height="590"
         id="gmap_canvas"
-        src="https://maps.google.com/maps?q=Toshkent&t=&z=13&ie=UTF8&iwloc=&output=embed"
-        frameBorder="0"
+        src="https://maps.google.com/maps?q=Abdulla%20qodiriy%20ko%E2%80%99chasi,%201A,%E2%80%A8Mo%E2%80%99ljal:%20Oliy%20sud&t=&z=17&ie=UTF8&iwloc=&output=embed"
+        frameborder="0"
         scrolling="no"
         marginHeight="0"
         marginWidth="0"
-      />
+      ></iframe>
     </MapLocationStle>
   );
 }

@@ -145,7 +145,7 @@ export default function Navbar() {
                     }
                     onClick={() => handleChaneLang(code, id)}
                   >
-                    {curtLangId === 1 ? text_ru : text_uz}
+                    {curtLangId === 0 ? text_uz : text_ru}
                   </p>
                 );
               })}
