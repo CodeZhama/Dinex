@@ -36,3 +36,4 @@ const StyledContact = styled.div`
     padding: 228px 0 0 0;
   }
 `;
+  
