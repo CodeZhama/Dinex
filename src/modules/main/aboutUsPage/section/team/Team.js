@@ -12,25 +12,18 @@ export default function Team() {
       <div className="container">
         <TeamGrid>
           {team.map((value) => {
-            const {
-              id,
-              prof,
-              firsName,
-              info,
-              image,
-              prof_ru,
-              info_ru,
-              firsName_ru,
-            } = value;
+            const { id, prof, firsName, image, prof_ru, firsName_ru } = value;
             return (
               <div className="team__card" key={id}>
                 <img className="team__image" src={image} alt={image} />
                 <div className="about__team">
-                  <h4>{curtLangId === 0 ? prof : prof_ru}</h4>
+                  <div className="proffision">
+                    <i className="icon icon-line-prof" />
+                    <h4>{curtLangId === 0 ? prof : prof_ru}</h4>
+                  </div>
                   <h3>{curtLangId === 0 ? firsName : firsName_ru}</h3>
-                  <p className="info">{curtLangId === 0 ? info : info_ru}</p>
-                  <img className="stiker" src={Quadrat} alt="quadrat" />
                 </div>
+                <img className="stiker" src={Quadrat} alt="quadrat" />
               </div>
             );
           })}
@@ -55,55 +48,65 @@ const TeamGrid = styled.div`
     position: relative;
     cursor: pointer;
     overflow: hidden;
-    filter: drop-shadow(0px 4px 6px rgba(141, 141, 141, 0.15));
     .team__image {
+      transition: 0.2s linear;
       width: 100%;
-      object-fit: cover;
       transform: scale(1.1);
     }
     .about__team {
-      width: 100%;
-      height: 100%;
+      width: 90%;
+      bottom: 0;
+      left: 0;
       position: absolute;
-      padding: 20px 94px 0 60px;
       background-color: var(--light);
-      top: 74.5%;
-      left: -30px;
-      transition: 0.2s linear;
-      & > h4 {
-        font-size: 14px;
-        font-weight: 600;
-        line-height: 19px;
-        margin-bottom: 8px;
+      padding: 20px 0 26px 31px;
+      transition: 0.1s linear;
+      .proffision {
+        margin-bottom: 10px;
+        display: flex;
         opacity: 0.7;
+        align-items: center;
+        gap: 8px;
+        h4 {
+          font-size: 14px;
+          font-weight: 600;
+          line-height: 19px;
+          letter-spacing: -0.02em;
+          transition: 0.2s linear;
+        }
+        i {
+          position: absolute;
+          left: -30px;
+          width: 14px;
+        }
       }
-      & > h3 {
+      h3 {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         font-size: 24px;
         font-weight: 600;
         line-height: 33px;
         letter-spacing: 0em;
-        margin-bottom: 26px;
       }
-      & > p {
-        font-size: 16px;
-        font-weight: 600;
-        line-height: 28px;
-      }
-
-      .stiker {
-        position: absolute;
-        bottom: 0px;
-        right: 0;
-      }
+    }
+    .stiker {
+      position: absolute;
     }
 
     &:hover {
+      .team__image {
+        transform: scale(1.2);
+      }
       .about__team {
-        padding: 63px 31px 45px 31px;
-        top: 0;
-        left: 0;
-        h3 {
-          margin-bottom: 13px;
+        width: 100%;
+        .proffision {
+          h4 {
+            margin-left: 26px;
+          }
+          i {
+            left: 32px;
+          }
         }
       }
     }
@@ -113,31 +116,12 @@ const TeamGrid = styled.div`
     grid-template-columns: 1fr 1fr;
     .team__card {
       .about__team {
-        h4 {
-          font-size: 14px;
-          font-weight: 600;
-          line-height: 19px;
-          letter-spacing: -0.02em;
+        padding: 15px 0 10px 31px;
+        .proffision{
+          margin-bottom: 5px;
         }
-        h3 {
-          font-size: 24px;
-          font-weight: 600;
-          line-height: 33px;
-          letter-spacing: 0em;
-          margin-bottom: 26px;
-        }
-        p {
-          font-size: 14px;
-          font-weight: 600;
-          line-height: 26px;
-          letter-spacing: 0em;
-        }
-      }
-      &:hover {
-        .about__team {
-          padding: 28px 29px 0 29px;
-          top: 0;
-          right: 0;
+        h3{
+          font-size: 20px;
         }
       }
     }
@@ -145,16 +129,5 @@ const TeamGrid = styled.div`
   @media (max-width: 600px) {
     grid-template-columns: 1fr;
     gap: 40px;
-    .team__card {
-      .about__team {
-        top: 80%;
-        p {
-          font-size: 16px;
-          font-weight: 600;
-          letter-spacing: 0em;
-          padding: 0 0 30px;
-        }
-      }
-    }
   }
 `;

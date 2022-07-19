@@ -4,7 +4,7 @@
   height: 25px;
   background-color: var(--dark);
   cursor: pointer;
-  transition: 0.1s linear;
+  transition: 0.2s linear;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   -webkit-mask-size: contain;
@@ -21,7 +21,6 @@
 .icon-middle {
   width: 17.75px;
 }
-
 
 .icon-twitter {
   mask-image: url("../icon/twitter.svg");
@@ -99,4 +98,8 @@
 .icon-down {
   mask-image: url("../icon/icondown.svg");
   -webkit-mask-image: url("../icon/icondown.svg");
+}
+.icon-line-prof {
+  mask-image: url("../icon/line-prof.svg");
+  -webkit-mask-image: url("../icon/line-prof.svg");
 }
