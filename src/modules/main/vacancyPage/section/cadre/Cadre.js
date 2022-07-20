@@ -1,21 +1,20 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
+import { TailSpin } from "react-loader-spinner";
 
 ///
 import Title from "../../../../../components/title/Title";
 import VacantInfo from "../../../../../components/vacantInfo";
 import Button from "../../../../../components/button";
 import RootContext from "../../../../../context/Context";
-import { useEffect } from "react";
 
 ///
 export default function Cadre({
   setModalActive,
   curVacant,
   loading,
-  // vacants,
   services,
   setCurVacant,
   activeIndex,
@@ -65,7 +64,21 @@ export default function Cadre({
     <StyleCadre>
       <div className="container">
         {loading ? (
-          <h1>Loading....</h1>
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <TailSpin
+              height="100"
+              width="100"
+              color="#ff9737"
+              ariaLabel="loading"
+            />
+          </div>
         ) : (
           <div className="cadre">
             <Title>

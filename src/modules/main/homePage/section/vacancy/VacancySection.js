@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import Slider from "react-slick";
 import RootContext from "../../../../../context/Context";
+import { TailSpin } from "react-loader-spinner";
 
 //
 import Button from "../../../../../components/button";
@@ -51,7 +52,7 @@ function SamplePrevArrow(props) {
     </div>
   );
 }
-export default function VacancySection({ firstVacantArray }) {
+export default function VacancySection({ loading, firstVacantArray }) {
   const { t } = useTranslation();
   const { curLangId } = useContext(RootContext);
   const navigate = useNavigate();
@@ -110,60 +111,81 @@ export default function VacancySection({ firstVacantArray }) {
           <div className="info">{t("text_bottom_partner")}</div>
         </Title>
 
-        <Slider {...setting}>
-          {firstVacantArray.vacancies.length > 0
-            ? firstVacantArray?.vacancies?.map((item, index) => {
-                // console.log(item);
-                return (
-                  <div
-                    key={item.vacancies_id}
-                    className="card"
-                    onClick={() =>
-                      toVacancyPage(
-                        "/vacansy",
-                        item.vacancies_id,
-                        item.service_id
-                      )
-                    }
-                  >
-                    <h2 className="specialist">
-                      {curLangId === 0
-                        ? item.vacancies_title_uz
-                        : item.vacancies_title_ru}
-                    </h2>
-                    <div className="salary"></div>
-                    <div className="demand">{t("requirements")}:</div>
-                    <div className="year row">
-                      <div className="size_left">{t("text_experience")}:</div>
-                      <div className="size__right">
-                        {item.vacancies_experience}
+        {loading ? (
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <TailSpin
+              height="100"
+              width="100"
+              color="#ff9737"
+              ariaLabel="loading"
+            />
+          </div>
+        ) : (
+          <Slider {...setting}>
+            {firstVacantArray.vacancies.length > 0
+              ? firstVacantArray?.vacancies?.map((item, index) => {
+                  // console.log(item);
+                  return (
+                    <div
+                      key={item.vacancies_id}
+                      className="card"
+                      onClick={() =>
+                        toVacancyPage(
+                          "/vacansy",
+                          item.vacancies_id,
+                          item.service_id
+                        )
+                      }
+                    >
+                      <h2 className="specialist">
+                        {curLangId === 0
+                          ? item.vacancies_title_uz
+                          : item.vacancies_title_ru}
+                      </h2>
+                      <div className="salary"></div>
+                      <div className="demand">{t("requirements")}:</div>
+                      <div className="year row">
+                        <div className="size_left">{t("text_experience")}:</div>
+                        <div className="size__right">
+                          {item.vacancies_experience}
+                        </div>
+                      </div>
+                      <div className="six row">
+                        <div className="size_left">{t("text_salary")}:</div>
+                        <div className="size__right">
+                          {item.vacancies_salary}
+                        </div>
+                      </div>
+                      <div className="experience row">
+                        <div className="size_left">{t("text_work_time")}:</div>
+                        <div className="size__right">
+                          {item.vacancies_working_time}
+                        </div>
+                      </div>
+                      <div className="position row">
+                        <div className="size_left">{t("text_work_day")}:</div>
+                        <div className="size__right">
+                          {item.vacancies_work_schedule}
+                        </div>
+                      </div>
+                      <div className="view row">
+                        <p>{t("all_vacancy_txt")}</p>
+                        <i className="icon icon-top-right icon-very-sm " />
                       </div>
                     </div>
-                    <div className="six row">
-                      <div className="size_left">{t("text_salary")}:</div>
-                      <div className="size__right">{item.vacancies_salary}</div>
-                    </div>
-                    <div className="experience row">
-                      <div className="size_left">{t("text_work_time")}:</div>
-                      <div className="size__right">
-                        {item.vacancies_working_time}
-                      </div>
-                    </div>
-                    <div className="position row">
-                      <div className="size_left">{t("text_work_day")}:</div>
-                      <div className="size__right">
-                        {item.vacancies_work_schedule}
-                      </div>
-                    </div>
-                    <div className="view row">
-                      <p>{t("all_vacancy_txt")}</p>
-                      <i className="icon icon-top-right icon-very-sm " />
-                    </div>
-                  </div>
-                );
-              })
-            : ""}
-        </Slider>
+                  );
+                })
+              : ""}
+          </Slider>
+        )}
+
         <div className="all__view" onClick={() => toVacancyPage("/vacansy")}>
           <Button bglight>
             <p>{t("all_vacancy_txt")}</p>

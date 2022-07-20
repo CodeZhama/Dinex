@@ -46,6 +46,7 @@ const TeamGrid = styled.div`
   gap: 20px;
   .team__card {
     position: relative;
+    max-height: 450px;
     cursor: pointer;
     overflow: hidden;
     .team__image {
@@ -95,6 +96,7 @@ const TeamGrid = styled.div`
     }
 
     &:hover {
+      filter: drop-shadow(0px 6px 8px rgba(141, 141, 141, 0.15));
       .team__image {
         transform: scale(1.2);
       }
@@ -117,10 +119,10 @@ const TeamGrid = styled.div`
     .team__card {
       .about__team {
         padding: 15px 0 10px 31px;
-        .proffision{
+        .proffision {
           margin-bottom: 5px;
         }
-        h3{
+        h3 {
           font-size: 20px;
         }
       }

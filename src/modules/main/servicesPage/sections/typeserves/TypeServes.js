@@ -10,11 +10,13 @@ import Title from "../../../../../components/title/Title";
 import Api from "../../../../../services/api";
 import Modal from "../../../../../components/modal";
 import Application from "../../../../../components/application";
+import { TailSpin } from "react-loader-spinner";
+
 ///
 export default function TypeServes() {
   const { state } = useLocation();
-  console.log(state);
   const { t } = useTranslation();
+  //
   const { curtLangId } = useContext(RootContext);
   const [activeIndex, setActiveIndex] = useState(state || 0);
   const [loading, setLoading] = useState(true);
@@ -32,7 +34,6 @@ export default function TypeServes() {
       if (data) {
         setTypeServec(data.data.services);
         setCurSerItem(data.data.services[state || 0]);
-        // console.log(data.data.services);
         setLoading(true);
       } else {
         console.log("Malumot topilmadi");
@@ -63,7 +64,21 @@ export default function TypeServes() {
             <h1 className="title">{t("title_center")}</h1>
           </Title>
           {loading ? (
-            <h1>Loading...</h1>
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <TailSpin
+                height="100"
+                width="100"
+                color="#ff9737"
+                ariaLabel="loading"
+              />
+            </div>
           ) : (
             <div className="type">
               {typeServec.map((item, index) => {

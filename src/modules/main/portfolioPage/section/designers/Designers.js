@@ -2,10 +2,11 @@ import React, { useEffect, useContext } from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import RootContext from "../../../../../context/Context";
+import { TailSpin } from "react-loader-spinner";
+
 //
 import Title from "../../../../../components/title/Title";
 import Button from "../../../../../components/button";
-// import Modal from "../../../../../components/modal/Modal";
 
 //
 export default function Designers({
@@ -43,7 +44,21 @@ export default function Designers({
           <h1 className="title">{t("navbar_portfolio")}</h1>
         </Title>
         {loading ? (
-          <h1>Loading....</h1>
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <TailSpin
+              height="100"
+              width="100"
+              color="#ff9737"
+              ariaLabel="loading"
+            />
+          </div>
         ) : (
           <StyleDesignList>
             <div className="type__div">

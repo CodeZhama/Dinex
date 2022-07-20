@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { TailSpin } from "react-loader-spinner";  
 //
 import RootContext from "../../../../../context/Context";
 import Title from "../../../../../components/title/Title";
@@ -23,7 +24,21 @@ export default function OurServes({ loading, typeServec }) {
     <StyleOurServes>
       <div className="container">
         {loading ? (
-          <h1>Loading....</h1>
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <TailSpin
+              height="100"
+              width="100"
+              color="#ff9737"
+              ariaLabel="loading"
+            />
+          </div>
         ) : (
           <div className="home__serves">
             <GridImg>

@@ -101,7 +101,29 @@ const ButtonStyle = styled.button`
         border: 1px solid #ffe1b7;
       }
     `}
+  
 
+    ${({ pageNotFound }) =>
+    pageNotFound &&
+    css`
+      display: flex;
+      align-items: center;
+
+      gap: 7px;
+      i {
+        margin-top: 2px;
+        width: 15px;
+        height: 15px;
+        background-color: var(--light);
+        transform: rotate(180deg);
+      }
+      p {
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 24px;
+        letter-spacing: 0em;
+      }
+    `}
 
     @media (max-width: 600px) {
     font-size: 16px;

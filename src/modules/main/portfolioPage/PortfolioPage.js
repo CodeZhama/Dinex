@@ -59,6 +59,7 @@ export default function PortfolioPage() {
         setActiveIndex={setActiveIndex}
         setCurSer={setCurSer}
         setCurPortfolioSlider={setCurPortfolioSlider}
+        
       />
       <LeaveApp />
       {modal ? (

@@ -9,6 +9,7 @@ import Serveces from "../modules/main/servicesPage";
 import PortfolioPage from "../modules/main/portfolioPage/PortfolioPage";
 import Vacansy from "../modules/main/vacancyPage";
 import Contact from "../modules/main/contactPage";
+import PageNotFound from "../modules/main/page-not-found/PageNotFound";
 //
 
 export default function Router() {
@@ -23,6 +24,7 @@ export default function Router() {
           <Route path="vacansy" element={<Vacansy />} />
           <Route path="contact" element={<Contact />} />
         </Route>
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </BrowserRouter>
   );

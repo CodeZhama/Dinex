@@ -33,8 +33,6 @@ export default function Home() {
       });
       setTypeServec(data.data.services);
       setFirstVacantArray(data.data.services[0]);
-      
-      // console.log(data.data.services);
     } catch (error) {
       setLoading(true);
       console.log(error);
@@ -50,7 +48,7 @@ export default function Home() {
       <Portfolio />
       <Petition />
       <Partner />
-      <Vacansy firstVacantArray={firstVacantArray} />
+      <Vacansy loading={loading} firstVacantArray={firstVacantArray} />
       {modal ? (
         <Modal setModal={setModal}>
           <Application />
